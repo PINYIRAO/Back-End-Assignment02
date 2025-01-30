@@ -45,8 +45,8 @@ describe("Employee Routes", () => {
       expect(response.body.data).toHaveProperty("position");
     });
   });
-  describe("PUT /api/v1/employees", () => {
-    it("should updated a exsiting employee object", async () => {
+  describe("PUT /api/v1/employees/:id", () => {
+    it("should update a exsiting employee object", async () => {
       const response = await request(app).put("/api/v1/employees/2").send({
         position: "it",
         department: "IT",
@@ -62,6 +62,19 @@ describe("Employee Routes", () => {
       expect(response.body.data).toHaveProperty("position");
       // check the updated email value
       expect(response.body.data.email).toBe("prao@email.com");
+    });
+  });
+  describe("DELETE /api/v1/employees/:id", () => {
+    it("should delete a exsiting employee object", async () => {
+      const response = await request(app).delete("/api/v1/employees/20");
+
+      // check the status
+      expect(response.status).toBe(200);
+      // check the returned employee has the right properties
+      expect(response.body.data).toHaveProperty("name");
+      expect(response.body.data).toHaveProperty("position");
+      // check the email format, including @
+      expect(response.body.data.email).toMatch("@");
     });
   });
 });
