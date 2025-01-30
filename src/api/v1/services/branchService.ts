@@ -1,107 +1,101 @@
-import { Employee } from "../models/employeeModel";
-import employeeData from "../data/employeeData";
+import { Branch } from "../models/branchModel";
+import branchData from "../data/branchData";
 
-// initialize the employee data using the given data in the assignments instruction
-const employees: Employee[] = employeeData;
+// initialize the branch data using the given data in the assignments instruction
+const branches: Branch[] = branchData;
 
-function newEmployeeId(employees: Employee[]): number {
-  // get the id for new employee
-  return employees.reduce(
-    (id, employee) => (id > employee.id ? id : employee.id) + 1,
+function newBranchId(branches: Branch[]): number {
+  // get the id for new branch
+  return branches.reduce(
+    (id, branch) => (id > branch.id ? id : branch.id) + 1,
     0
   );
 }
 
 /**
- * @description Get all employees， set the function async temporarily.
- * @returns a Promise that resolves to an array of `Employee` objects.
+ * @description Get all branches set the function async temporarily.
+ * @returns a Promise that resolves to an array of `Branch` objects.
  */
-export const getAllEmployees = async (): Promise<Employee[]> => {
-  return employees;
+export const getAllBranches = async (): Promise<Branch[]> => {
+  return branches;
 };
 
 /**
- * @description get an employee by id.
- * @param {number} id - The ID of the employee.
- * @returns {Promise<Employee>}
- * @throws {Error} If the employee with the given ID is not found.
+ * @description get an branch by id.
+ * @param {number} id - The ID of the branch.
+ * @returns {Promise<Branch>}
+ * @throws {Error} If the branch with the given ID is not found.
  */
-export const getEmployeeById = async (id: number): Promise<Employee> => {
-  // retieve the Employee's index from the Employees array by comparing the Employee ids
-  const index: number = employees.findIndex((i) => i.id === id);
+export const getBranchById = async (id: number): Promise<Branch> => {
+  // retieve the Branch's index from the Branches array by comparing the Branch ids
+  const index: number = branches.findIndex((i) => i.id === id);
   // if the index is not found we expects a -1
   if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+    throw new Error(`Branches with ID ${id} not found`);
   }
 
-  return employees[index];
+  return branches[index];
 };
 
 /**
- * @description create an employee.
- * @param {{name: string;  position: string;  department: string;  email: string;  phone: string;  branchId: number;}}
- * employee - the employee data
- * @returns {Promise<Employee>} A promise that resolves to the created employee
+ * @description create an branch.
+ * @param {{name: string;  address: string; phone: string;  }}
+ * branch - the branch data
+ * @returns {Promise<Branch>} A promise that resolves to the created branch
  */
-export const createEmployee = async (employee: {
+export const createBranch = async (branch: {
   name: string;
-  position: string;
-  department: string;
-  email: string;
+  address: string;
   phone: string;
-  branchId: number;
-}): Promise<Employee> => {
-  // define a new employee
-  const newEmployee: Employee = { id: newEmployeeId(employees), ...employee };
+}): Promise<Branch> => {
+  // define a new branch
+  const newBranch: Branch = { id: newBranchId(branches), ...branch };
 
-  // add the new employee to the global scoped array of employees
-  employees.push(newEmployee);
-  return newEmployee;
+  // add the new branch to the global scoped array of branches
+  branches.push(newBranch);
+  return newBranch;
 };
 
 /**
- * @description Update an existing employee.
- * @param {number} id - The ID of the employee to update.
- * @param {{position: string;  department: string;  email: string;  phone: string;  branchId: number;}}
- * employee - the employee data
- * @returns {Promise<Employee>}
- * @throws {Error} If the employee with the given ID is not found.
+ * @description Update an existing branch.
+ * @param {number} id - The ID of the branch to update.
+ * @param {{address: string; phone: string;}}
+ * branch - the branch data
+ * @returns {Promise<Branch>}
+ * @throws {Error} If the branch with the given ID is not found.
  */
-export const updateEmployee = async (
+export const updateBranch = async (
   id: number,
-  employee: {
-    position: string;
-    department: string;
-    email: string;
+  branch: {
+    address: string;
     phone: string;
-    branchId: number;
   }
-): Promise<Employee> => {
-  // retieve the Employee's index from the employees array by comparing the Employee ids
-  const index: number = employees.findIndex((i) => i.id === id);
+): Promise<Branch> => {
+  // retieve the Branch's index from the branches array by comparing the Branch ids
+  const index: number = branches.findIndex((i) => i.id === id);
   // if the index is not found we expects a -1
   if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+    throw new Error(`Branch with ID ${id} not found`);
   }
 
-  // update the employee information of the found index
-  employees[index] = { ...employees[index], ...employee };
+  // update the branch information of the found index
+  branches[index] = { ...branches[index], ...branch };
 
-  return employees[index];
+  return branches[index];
 };
 
 /**
- * @description Delete an employee.
- * @param {number} id - The ID of the employee to delete.
- * @returns {Promise<Employee>}
- * @throws {Error} If the employee with the given ID is not found.
+ * @description Delete an branch.
+ * @param {number} id - The ID of the branch to delete.
+ * @returns {Promise<Branch>}
+ * @throws {Error} If the branch with the given ID is not found.
  */
-export const deleteEmployee = async (id: number): Promise<Employee> => {
-  const index: number = employees.findIndex((i) => i.id === id);
+export const deleteBranch = async (id: number): Promise<Branch> => {
+  const index: number = branches.findIndex((i) => i.id === id);
   if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+    throw new Error(`Branch with ID ${id} not found`);
   }
 
-  // remove the employee from the employee array, start the delete form the index and only delete 1 index
-  return employees.splice(index, 1)[0];
+  // remove the branch from the branch array, start the delete form the index and only delete 1 index
+  return branches.splice(index, 1)[0];
 };
