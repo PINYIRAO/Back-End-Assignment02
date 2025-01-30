@@ -14,6 +14,8 @@ const app: Express = express();
 // setup swagger for api documentation
 setupSwagger(app);
 
+app.use(express.json());
+
 // Use morgan for HTTP request logging
 app.use(morgan("combined"));
 

@@ -16,4 +16,23 @@ describe("Employee Routes", () => {
       expect(response.body.length).toEqual(sampleEmployeeData.length);
     });
   });
+  describe("POST /api/v1/employees", () => {
+    it("should return a new employee object", async () => {
+      const response = (await request(app).post("/api/v1/employees")).body({
+        name: "pinyi",
+        position: "it",
+        department: "IT",
+        email: "prao@email.com",
+        phone: "123-456-7890",
+        branchId: 12,
+      });
+
+      // check the status
+      expect(response.status).toBe(200);
+      // check the result type is an array
+      expect(response.body).toBeInstanceOf(Array);
+      // check the array length equal sample data length
+      expect(response.body.length).toEqual(sampleEmployeeData.length);
+    });
+  });
 });
