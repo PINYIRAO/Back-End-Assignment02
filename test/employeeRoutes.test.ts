@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import type { Employee } from "src/api/v1/models/employeeModel";
 import * as employeeRoutes from "../src/api/v1/routes/employeeRoutes";
 import sampleEmployeeData from "../src/api/v1/data/employeeData";
 import request from "supertest";
@@ -18,7 +19,7 @@ describe("Employee Routes", () => {
   });
   describe("POST /api/v1/employees", () => {
     it("should return a new employee object", async () => {
-      const response = (await request(app).post("/api/v1/employees")).body({
+      const response = await request(app).post("/api/v1/employees").send({
         name: "pinyi",
         position: "it",
         department: "IT",
@@ -28,11 +29,10 @@ describe("Employee Routes", () => {
       });
 
       // check the status
-      expect(response.status).toBe(200);
-      // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
-      // check the array length equal sample data length
-      expect(response.body.length).toEqual(sampleEmployeeData.length);
+      expect(response.status).toBe(201);
+      // check the returned employee has the right properties
+      expect(response.body.data).toHaveProperty("name");
+      expect(response.body.data).toHaveProperty("position");
     });
   });
 });

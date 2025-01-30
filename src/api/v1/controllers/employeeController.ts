@@ -44,7 +44,6 @@ export const createEmployee = async (
     const newEmployee: Employee = await employeeService.createEmployee(
       req.body
     );
-    console.log(req.body);
 
     res.status(201).json({ message: "Employee Created", data: newEmployee });
   } catch (error) {

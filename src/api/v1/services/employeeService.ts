@@ -39,6 +39,5 @@ export const createEmployee = async (employee: {
 
   // add the new employee to the global scoped array of employees
   employees.push(newEmployee);
-  console.log(newEmployee);
   return newEmployee;
 };
