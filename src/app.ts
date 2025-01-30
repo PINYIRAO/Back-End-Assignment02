@@ -7,6 +7,7 @@ import setupSwagger from "../config/swagger";
 // import routes
 import healthRoutes from "./api/v1/routes/healthRoutes";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
+import branchRoutes from "./api/v1/routes/branchRoutes";
 
 // initialize the express application
 const app: Express = express();
@@ -21,6 +22,7 @@ app.use(morgan("combined"));
 
 app.use("/health", healthRoutes);
 app.use("/api/v1/employees", employeeRoutes);
+app.use("/api/v1/branches", branchRoutes);
 
 // export app and server for testing
 export default app;
