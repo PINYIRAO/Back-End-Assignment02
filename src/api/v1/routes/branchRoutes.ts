@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as branchesController from "../controllers/branchesController";
+import * as branchController from "../controllers/branchController";
 
 // define a router for deal with
 const router: Router = Router();
@@ -13,46 +13,46 @@ const router: Router = Router();
  * /api/v1/branches:
  *  get:
  *   summary: Get all branches
- *   tags: [Branches]
+ *   tags: [Branch]
  *   responses:
  *    200:
- *     description: All employess
+ *     description: All branches
  */
-router.get("/", branchesController.getAllBranches);
+router.get("/", branchController.getAllBranches);
 
 /**
  * @route GET /:id
- * @description Get an existing branches.
+ * @description Get an existing branch.
  */
 /**
  * @openapi
  * /api/v1/branches/{id}:
  *   get:
- *     summary: Get an existing branches
- *     tags: [Branches]
+ *     summary: Get an existing branch
+ *     tags: [Branch]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: number
  *         required: true
- *         description: ID of the branches to be found
+ *         description: ID of the branch to be found
  *     responses:
  *       200:
- *         description: The wanted branches
+ *         description: The wanted branch
  */
-router.get("/:id", branchesController.getBranchesById);
+router.get("/:id", branchController.getBranchById);
 
 /**
  * @route POST /
- * @description Create a new branches
+ * @description Create a new branch
  */
 /**
  * @openapi
  * /api/v1/branches:
  *  post:
- *   summary: Create a new branches
- *   tags: [Branches]
+ *   summary: Create a new branch
+ *   tags: [Branch]
  *   requestBody:
  *     content:
  *       application/json:
@@ -61,81 +61,69 @@ router.get("/:id", branchesController.getBranchesById);
  *           properties:
  *             name:
  *               type: string
- *             position:
- *               type: string
- *             department:
- *               type: string
- *             email:
+ *             address:
  *               type: string
  *             phone:
  *               type: string
- *             branchId:
- *               type: number
  *   responses:
  *    201:
- *     description: the new branches
+ *     description: the new branch
  */
-router.post("/", branchesController.createBranches);
+router.post("/", branchController.createBranch);
 
 /**
  * @route PUT /:id
- * @description Update an existing branches.
+ * @description Update an existing branch.
  *
  * @openapi
  * /api/v1/branches/{id}:
  *   put:
- *     summary: Update an existing branches
- *     tags: [Branches]
+ *     summary: Update an existing branch
+ *     tags: [Branch]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: number
  *         required: true
- *         description: ID of the branches to update
+ *         description: ID of the branch to update
  *     requestBody:
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               position:
- *                 type: string
- *               department:
- *                 type: string
- *               email:
+ *               address:
  *                 type: string
  *               phone:
  *                   type: string
- *               branchId:
- *                 type: number
  *     responses:
  *       200:
- *         description: The updated branches
+ *         description: The updated branch
  */
-router.put("/:id", branchesController.updateBranches);
+router.put("/:id", branchController.updateBranch);
 
 /**
  * @route DELETE /:id
- * @description Delete an branches profile.
+ * @description Delete a branch profile.
  */
 /**
  * @openapi
  * /api/v1/branches/{id}:
  *   delete:
- *     summary: Delete an existing branches
- *     tags: [Branches]
+ *     summary: Delete an existing branch
+ *     tags: [Branch]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: number
  *         required: true
- *         description: ID of the branches to be deleted
+ *         description: ID of the branch to be deleted
  *     responses:
  *       200:
- *         description: The deleted branches
+ *         description: The deleted branch
  */
-router.delete("/:id", branchesController.deleteBranches);
+router.delete("/:id", branchController.deleteBranch);
 
 export default router;

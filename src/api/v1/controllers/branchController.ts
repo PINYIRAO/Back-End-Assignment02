@@ -34,7 +34,7 @@ export const getAllBranches = async (
  * @route get /:id
  * @returns {Promise<void>}
  */
-export const getBranchesById = async (
+export const getBranchById = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -56,7 +56,7 @@ export const getBranchesById = async (
  * @route POST /
  * @returns {Promise<void>}
  */
-export const createBranches = async (
+export const createBranch = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -105,11 +105,11 @@ export const deleteBranch = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedBranches = await branchService.deleteBranch(
+    const removedBranch = await branchService.deleteBranch(
       parseInt(req.params.id)
     );
 
-    res.status(200).json({ message: "Branch Deleted", data: removedBranches });
+    res.status(200).json({ message: "Branch Deleted", data: removedBranch });
   } catch (error) {
     next(error);
   }
