@@ -21,6 +21,29 @@ const router: Router = Router();
 router.get("/", employeeController.getAllEmployees);
 
 /**
+ * @route GET /:id
+ * @description Get an existing employee.
+ */
+/**
+ * @openapi
+ * /api/v1/employees/{id}:
+ *   get:
+ *     summary: Get an existing employee.
+ *     tags: [Employee]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: ID of the employee to be found
+ *     responses:
+ *       200:
+ *         description: The wanted employee
+ */
+router.get("/:id", employeeController.getEmployeeById);
+
+/**
  * @route POST /
  * @description Create a new employee
  */

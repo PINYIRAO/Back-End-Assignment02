@@ -30,6 +30,28 @@ export const getAllEmployees = async (
 };
 
 /**
+ * @description get an existing employee by id.
+ * @route get /:id
+ * @returns {Promise<void>}
+ */
+export const getEmployeeById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    // call the employeeService by passing the id from thge url path and the body of the request
+    const employee: Employee = await employeeService.getEmployeeById(
+      parseInt(req.params.id)
+    );
+
+    res.status(200).json({ message: "Employee Found", data: employee });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @description Create a new employee.
  * @route POST /
  * @returns {Promise<void>}
