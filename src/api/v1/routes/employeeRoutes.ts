@@ -6,7 +6,7 @@ const router: Router = Router();
 
 /**
  * @route GET /
- * @description Get all items.
+ * @description Get all employees.
  */
 /**
  * @openapi
@@ -28,7 +28,7 @@ router.get("/", employeeController.getAllEmployees);
  * @openapi
  * /api/v1/employees/{id}:
  *   get:
- *     summary: Get an existing employee.
+ *     summary: Get an existing employee
  *     tags: [Employee]
  *     parameters:
  *       - in: path
@@ -76,5 +76,43 @@ router.get("/:id", employeeController.getEmployeeById);
  *     description: the new employee
  */
 router.post("/", employeeController.createEmployee);
+
+/**
+ * @route PUT /:id
+ * @description Update an existing employee.
+ *
+ * @openapi
+ * /api/v1/employees/{id}:
+ *   put:
+ *     summary: Update an existing employee
+ *     tags: [Employee]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: ID of the employee to update
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               position:
+ *                 type: string
+ *               department:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                   type: string
+ *               branchId:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: The updated employee
+ */
+router.put("/:id", employeeController.updateEmployee);
 
 export default router;

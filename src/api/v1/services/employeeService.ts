@@ -38,7 +38,7 @@ export const getEmployeeById = async (id: number): Promise<Employee> => {
 };
 
 /**
- * @description create a employee.
+ * @description create an employee.
  * @param {{name: string;  position: string;  department: string;  email: string;  phone: string;  branchId: number;}}
  * employee - the employee data
  * @returns {Promise<Employee>} A promise that resolves to the created employee
@@ -57,4 +57,35 @@ export const createEmployee = async (employee: {
   // add the new employee to the global scoped array of employees
   employees.push(newEmployee);
   return newEmployee;
+};
+
+/**
+ * @description Update an existing employee.
+ * @param {number} id - The ID of the employee to update.
+ * @param {{position: string;  department: string;  email: string;  phone: string;  branchId: number;}}
+ * employee - the employee data
+ * @returns {Promise<Employee>}
+ * @throws {Error} If the employee with the given ID is not found.
+ */
+export const updateEmployee = async (
+  id: number,
+  employee: {
+    position: string;
+    department: string;
+    email: string;
+    phone: string;
+    branchId: number;
+  }
+): Promise<Employee> => {
+  // retieve the Employee's index from the employees array by comparing the Employee ids
+  const index: number = employees.findIndex((i) => i.id === id);
+  // if the index is not found we expects a -1
+  if (index === -1) {
+    throw new Error(`Employee with ID ${id} not found`);
+  }
+
+  // update the employee information of the found index
+  employees[index] = { ...employees[index], ...employee };
+
+  return employees[index];
 };
