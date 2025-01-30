@@ -115,4 +115,27 @@ router.post("/", employeeController.createEmployee);
  */
 router.put("/:id", employeeController.updateEmployee);
 
+/**
+ * @route DELETE /:id
+ * @description Delete an employee profile.
+ */
+/**
+ * @openapi
+ * /api/v1/employees/{id}:
+ *   delete:
+ *     summary: Delete an existing employee
+ *     tags: [Employee]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: ID of the employee to be deleted
+ *     responses:
+ *       200:
+ *         description: The deleted employee
+ */
+router.delete("/:id", employeeController.deleteEmployee);
+
 export default router;

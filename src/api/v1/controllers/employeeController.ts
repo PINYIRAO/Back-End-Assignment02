@@ -97,3 +97,26 @@ export const updateEmployee = async (
     next(error);
   }
 };
+
+/**
+ * @description Delete an employee.
+ * @route DELETE /:id
+ * @returns {Promise<void>}
+ */
+export const deleteEmployee = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const removedEmployee = await employeeService.deleteEmployee(
+      parseInt(req.params.id)
+    );
+
+    res
+      .status(200)
+      .json({ message: "Employee Deleted", data: removedEmployee });
+  } catch (error) {
+    next(error);
+  }
+};
