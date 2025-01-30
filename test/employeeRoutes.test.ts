@@ -47,7 +47,7 @@ describe("Employee Routes", () => {
   });
   describe("PUT /api/v1/employees", () => {
     it("should updated a exsiting employee object", async () => {
-      const response = await request(app).post("/api/v1/employees/2").send({
+      const response = await request(app).put("/api/v1/employees/2").send({
         position: "it",
         department: "IT",
         email: "prao@email.com",
@@ -60,6 +60,8 @@ describe("Employee Routes", () => {
       // check the returned employee has the right properties
       expect(response.body.data).toHaveProperty("name");
       expect(response.body.data).toHaveProperty("position");
+      // check the updated email value
+      expect(response.body.data.email).toBe("prao@email.com");
     });
   });
 });
