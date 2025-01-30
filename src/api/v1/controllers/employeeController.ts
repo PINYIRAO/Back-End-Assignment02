@@ -10,6 +10,11 @@ import { Request, Response, NextFunction } from "express";
 import * as employeeService from "../services/employeeService";
 import type { Employee } from "../models/employeeModel";
 
+interface EmployeeQueryParams {
+  department?: string;
+  branchId?: string;
+}
+
 /**
  * @description Get all employees.
  * @route GET /
@@ -21,7 +26,11 @@ export const getAllEmployees = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const employees: Employee[] = await employeeService.getAllEmployees();
+    const { department, branchId }: EmployeeQueryParams = req.query;
+    const employees: Employee[] = await employeeService.getAllEmployees(
+      department,
+      parseInt(branchId)
+    );
 
     res.status(200).json(employees);
   } catch (error) {
