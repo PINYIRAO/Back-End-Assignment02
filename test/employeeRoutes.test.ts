@@ -7,7 +7,7 @@ import app from "../src/app";
 
 describe("Employee Routes", () => {
   describe("GET /api/v1/employees", () => {
-    it("should return all employee records as an array", async () => {
+    it("should return all employee records as an array when no query paramters provided", async () => {
       const response = await request(app).get("/api/v1/employees");
       // check the status
       expect(response.status).toBe(200);
@@ -15,6 +15,24 @@ describe("Employee Routes", () => {
       expect(response.body).toBeInstanceOf(Array);
       // check the array length equal sample data length
       expect(response.body.length).toEqual(sampleEmployeeData.length);
+    });
+    it("should return all employee records as an array matching criteria when  query paramters provided", async () => {
+      const department = "Operations";
+      const branchId = 3;
+
+      const response = await request(app)
+        .get("/api/v1/employees")
+        .query({ department, branchId });
+      // check the status
+      expect(response.status).toBe(200);
+      // check the result type is an array
+      expect(response.body).toBeInstanceOf(Array);
+      // check the array length
+      expect(response.body.length).toEqual(
+        sampleEmployeeData.filter(
+          (v) => v.department === department && v.branchId === branchId
+        ).length
+      );
     });
   });
   describe("GET /api/v1/employees/:id", () => {
