@@ -78,20 +78,14 @@ export const createEmployee = async (employee: {
 /**
  * @description Update an existing employee.
  * @param {number} id - The ID of the employee to update.
- * @param {{position: string;  department: string;  email: string;  phone: string;  branchId: number;}}
+ * @param {Partial<Employee>}
  * employee - the employee data
  * @returns {Promise<Employee>}
  * @throws {Error} If the employee with the given ID is not found.
  */
 export const updateEmployee = async (
   id: number,
-  employee: {
-    position: string;
-    department: string;
-    email: string;
-    phone: string;
-    branchId: number;
-  }
+  employee: Partial<Employee>
 ): Promise<Employee> => {
   // retieve the Employee's index from the employees array by comparing the Employee ids
   const index: number = employees.findIndex((i) => i.id === id);
@@ -100,8 +94,11 @@ export const updateEmployee = async (
     throw new Error(`Employee with ID ${id} not found`);
   }
 
+  // protect the name and id properties
+  const { id: _, name: __, ...updateEmployee } = employee;
+
   // update the employee information of the found index
-  employees[index] = { ...employees[index], ...employee };
+  employees[index] = { ...employees[index], ...updateEmployee };
 
   return employees[index];
 };
