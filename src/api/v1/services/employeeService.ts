@@ -13,11 +13,27 @@ function newEmployeeId(employees: Employee[]): number {
 }
 
 /**
- * @description Get all employees， set the function async temporarily.
+ * @description Get all employees that qualified with the optional parameters in  query， set the function async temporarily.
  * @returns a Promise that resolves to an array of `Employee` objects.
  */
-export const getAllEmployees = async (): Promise<Employee[]> => {
-  return employees;
+export const getAllEmployees = async (
+  department: string | undefined,
+  branchId: number | undefined
+): Promise<Employee[]> => {
+  // filter the employees using the query parameter
+  let resultEmployees = employees;
+  if (department) {
+    resultEmployees = resultEmployees.filter(
+      (employee) => employee.department === department
+    );
+  }
+  if (branchId) {
+    resultEmployees = resultEmployees.filter(
+      (employee) => employee.branchId === branchId
+    );
+  }
+
+  return resultEmployees;
 };
 
 /**

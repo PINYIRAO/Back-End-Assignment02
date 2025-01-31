@@ -28,8 +28,8 @@ export const getAllEmployees = async (
   try {
     const { department, branchId }: EmployeeQueryParams = req.query;
     const employees: Employee[] = await employeeService.getAllEmployees(
-      department,
-      parseInt(branchId)
+      department !== undefined ? department : undefined,
+      branchId !== undefined ? parseInt(branchId) : undefined
     );
 
     res.status(200).json(employees);

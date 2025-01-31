@@ -6,17 +6,28 @@ const router: Router = Router();
 
 /**
  * @route GET /
- * @description Get all employees.
+ * @description Get all employees that qualified with the optional parameters in  query.
  */
 /**
  * @openapi
  * /api/v1/employees:
  *  get:
- *   summary: Get all employees
+ *   summary: Get all employees matching the criteria
  *   tags: [Employee]
+ *   parameters:
+ *    - in: query
+ *      name: branchId
+ *      schema:
+ *        type: string
+ *      description: Filter employees by branch ID.
+ *    - in: query
+ *      name: department
+ *      schema:
+ *        type: string
+ *      description: Filter employees by department name.
  *   responses:
  *    200:
- *     description: All employess
+ *     description: All employess  matching the criteria
  */
 router.get("/", employeeController.getAllEmployees);
 
