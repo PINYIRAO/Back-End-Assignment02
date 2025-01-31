@@ -58,25 +58,25 @@ export const createBranch = async (branch: {
 
 /**
  * @description Update an existing branch.
- * @param {number} id - The ID of the branch to update.
+ * @param {number} targetId - The ID of the branch to update.
  * @param {Partial<Branch>}
  * branch - the branch data
  * @returns {Promise<Branch>}
  * @throws {Error} If the branch with the given ID is not found.
  */
 export const updateBranch = async (
-  id: number,
+  targetId: number,
   branch: Partial<Branch>
 ): Promise<Branch> => {
   // retieve the Branch's index from the branches array by comparing the Branch ids
-  const index: number = branches.findIndex((i) => i.id === id);
+  const index: number = branches.findIndex((i) => i.id === targetId);
   // if the index is not found we expects a -1
   if (index === -1) {
-    throw new Error(`Branch with ID ${id} not found`);
+    throw new Error(`Branch with ID ${targetId} not found`);
   }
 
   // protect the name and id properties
-  const { id: _, name: __, ...updateBranch } = branch;
+  const { id, name, ...updateBranch } = branch; // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // update the branch information of the found index
   branches[index] = { ...branches[index], ...updateBranch };

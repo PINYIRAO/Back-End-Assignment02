@@ -21,7 +21,7 @@ export const getAllEmployees = async (
   branchId: number | undefined
 ): Promise<Employee[]> => {
   // filter the employees using the query parameter
-  let resultEmployees = employees;
+  let resultEmployees: Employee[] = employees;
   if (department) {
     resultEmployees = resultEmployees.filter(
       (employee) => employee.department === department
@@ -77,25 +77,25 @@ export const createEmployee = async (employee: {
 
 /**
  * @description Update an existing employee.
- * @param {number} id - The ID of the employee to update.
+ * @param {number} targetId - The ID of the employee to update.
  * @param {Partial<Employee>}
  * employee - the employee data
  * @returns {Promise<Employee>}
  * @throws {Error} If the employee with the given ID is not found.
  */
 export const updateEmployee = async (
-  id: number,
+  targetId: number,
   employee: Partial<Employee>
 ): Promise<Employee> => {
   // retieve the Employee's index from the employees array by comparing the Employee ids
-  const index: number = employees.findIndex((i) => i.id === id);
+  const index: number = employees.findIndex((i) => i.id === targetId);
   // if the index is not found we expects a -1
   if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+    throw new Error(`Employee with ID ${targetId} not found`);
   }
 
   // protect the name and id properties
-  const { id: _, name: __, ...updateEmployee } = employee;
+  const { id, name, ...updateEmployee } = employee; // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // update the employee information of the found index
   employees[index] = { ...employees[index], ...updateEmployee };

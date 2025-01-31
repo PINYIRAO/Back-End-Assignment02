@@ -1,14 +1,11 @@
-import { Request, Response, NextFunction } from "express";
-import type { Branch } from "src/api/v1/models/branchModel";
-import * as branchRoutes from "../src/api/v1/routes/branchRoutes";
 import sampleBranchData from "../src/api/v1/data/branchData";
-import request from "supertest";
+import request, { Response } from "supertest";
 import app from "../src/app";
 
 describe("Branch Routes", () => {
   describe("GET /api/v1/branches", () => {
     it("should return all branch records as an array", async () => {
-      const response = await request(app).get("/api/v1/branches");
+      const response: Response = await request(app).get("/api/v1/branches");
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
@@ -19,7 +16,7 @@ describe("Branch Routes", () => {
   });
   describe("GET /api/v1/branches/:id", () => {
     it("should return the wanted branch", async () => {
-      const response = await request(app).get("/api/v1/branches/2");
+      const response: Response = await request(app).get("/api/v1/branches/2");
       // check the status
       expect(response.status).toBe(200);
       // check the returned branch has the right properties
@@ -29,11 +26,13 @@ describe("Branch Routes", () => {
   });
   describe("POST /api/v1/branches", () => {
     it("should return a new branch object", async () => {
-      const response = await request(app).post("/api/v1/branches").send({
-        name: "Red River",
-        address: "St. James 1111",
-        phone: "123-456-7890",
-      });
+      const response: Response = await request(app)
+        .post("/api/v1/branches")
+        .send({
+          name: "Red River",
+          address: "St. James 1111",
+          phone: "123-456-7890",
+        });
 
       // check the status
       expect(response.status).toBe(201);
@@ -45,10 +44,12 @@ describe("Branch Routes", () => {
   });
   describe("PUT /api/v1/branches/:id", () => {
     it("should update a exsiting branch object", async () => {
-      const response = await request(app).put("/api/v1/branches/2").send({
-        address: "St. James 1111",
-        phone: "123-456-7890",
-      });
+      const response: Response = await request(app)
+        .put("/api/v1/branches/2")
+        .send({
+          address: "St. James 1111",
+          phone: "123-456-7890",
+        });
 
       // check the status
       expect(response.status).toBe(200);
@@ -61,7 +62,9 @@ describe("Branch Routes", () => {
   });
   describe("DELETE /api/v1/branches/:id", () => {
     it("should delete a exsiting branch object", async () => {
-      const response = await request(app).delete("/api/v1/branches/3");
+      const response: Response = await request(app).delete(
+        "/api/v1/branches/3"
+      );
 
       // check the status
       expect(response.status).toBe(200);

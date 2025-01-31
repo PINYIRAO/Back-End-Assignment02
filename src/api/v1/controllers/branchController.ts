@@ -105,7 +105,7 @@ export const deleteBranch = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedBranch = await branchService.deleteBranch(
+    const removedBranch: Branch = await branchService.deleteBranch(
       parseInt(req.params.id)
     );
 

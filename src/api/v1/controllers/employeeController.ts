@@ -118,7 +118,7 @@ export const deleteEmployee = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedEmployee = await employeeService.deleteEmployee(
+    const removedEmployee: Employee = await employeeService.deleteEmployee(
       parseInt(req.params.id)
     );
 
