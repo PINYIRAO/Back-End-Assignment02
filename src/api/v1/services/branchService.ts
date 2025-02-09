@@ -49,7 +49,7 @@ export const createBranch = async (branch: {
   phone: string;
 }): Promise<Branch> => {
   // define a new branch
-  const newBranch: Branch = { id: newBranchId(branches), ...branch };
+  const newBranch: Branch = { ...branch, id: newBranchId(branches) };
 
   // add the new branch to the global scoped array of branches
   branches.push(newBranch);

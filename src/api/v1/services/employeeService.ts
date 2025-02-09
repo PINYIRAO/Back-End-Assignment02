@@ -68,7 +68,7 @@ export const createEmployee = async (employee: {
   branchId: number;
 }): Promise<Employee> => {
   // define a new employee
-  const newEmployee: Employee = { id: newEmployeeId(employees), ...employee };
+  const newEmployee: Employee = { ...employee, id: newEmployeeId(employees) };
 
   // add the new employee to the global scoped array of employees
   employees.push(newEmployee);

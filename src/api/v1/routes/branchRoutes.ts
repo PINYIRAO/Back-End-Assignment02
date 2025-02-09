@@ -109,7 +109,7 @@ router.post(
  */
 router.put(
   "/:id",
-  validateRequest(branchSchema("POST")),
+  validateRequest(branchSchema("PUT")),
   branchController.updateBranch
 );
 
