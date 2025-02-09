@@ -61,6 +61,41 @@ describe("Employee Routes", () => {
       expect(response.body.data).toHaveProperty("name");
       expect(response.body.data).toHaveProperty("position");
     });
+    it("should receive an error when name length is less than 3", async () => {
+      const response: Response = await request(app)
+        .post("/api/v1/employees")
+        .send({
+          name: "xy",
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 12,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body).toHaveProperty("error");
+      expect(response.body.error).toMatch("should greater than 3");
+    });
+    it("should receive an error when position field is missing", async () => {
+      const response: Response = await request(app)
+        .post("/api/v1/employees")
+        .send({
+          name: "xyz",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 12,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body).toHaveProperty("error");
+      expect(response.body.error).toMatch(/position is required/i);
+    });
   });
   describe("PUT /api/v1/employees/:id", () => {
     it("should update a exsiting employee object", async () => {
@@ -81,6 +116,42 @@ describe("Employee Routes", () => {
       expect(response.body.data).toHaveProperty("position");
       // check the updated email value
       expect(response.body.data.email).toBe("prao@email.com");
+    });
+    it("should receive an error if has the name field", async () => {
+      const response: Response = await request(app)
+        .put("/api/v1/employees/2")
+        .send({
+          name: "XYZ",
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 12,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body).toHaveProperty("error");
+      expect(response.body.error).toMatch(/is not allowed to be updated/i);
+    });
+    it("should receive an error if branchid is not a number", async () => {
+      const response: Response = await request(app)
+        .put("/api/v1/employees/2")
+        .send({
+          name: "XYZ",
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: "abc",
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body).toHaveProperty("error");
+      expect(response.body.error).toMatch(/must be a number/i);
     });
   });
   describe("DELETE /api/v1/employees/:id", () => {

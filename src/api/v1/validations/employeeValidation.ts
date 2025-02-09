@@ -15,7 +15,7 @@ export const employeeSchema = (method: Method): ObjectSchema => {
             "string.min": "Name length should greater than 3",
           })
         : Joi.forbidden().messages({
-            "any.forbidden": "Name is not allowed to be updated",
+            "any.unknown": "Name is not allowed to be updated",
           }),
 
     position:
