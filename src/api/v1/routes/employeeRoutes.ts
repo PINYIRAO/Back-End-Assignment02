@@ -1,5 +1,7 @@
 import { Router } from "express";
 import * as employeeController from "../controllers/employeeController";
+import { validateRequest } from "../middleware/validate";
+import { employeeSchema } from "../validations/employeeValidation";
 
 // define a router for deal with
 const router: Router = Router();
@@ -86,7 +88,11 @@ router.get("/:id", employeeController.getEmployeeById);
  *    201:
  *     description: the new employee
  */
-router.post("/", employeeController.createEmployee);
+router.post(
+  "/",
+  validateRequest(employeeSchema("POST")),
+  employeeController.createEmployee
+);
 
 /**
  * @route PUT /:id
@@ -124,7 +130,11 @@ router.post("/", employeeController.createEmployee);
  *       200:
  *         description: The updated employee
  */
-router.put("/:id", employeeController.updateEmployee);
+router.put(
+  "/:id",
+  validateRequest(employeeSchema("PUT")),
+  employeeController.updateEmployee
+);
 
 /**
  * @route DELETE /:id

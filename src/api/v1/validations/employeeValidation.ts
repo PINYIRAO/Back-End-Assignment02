@@ -2,18 +2,21 @@ import Joi, { ObjectSchema } from "joi";
 
 type Method = "POST" | "PUT";
 
+// for validating the employee data from post and put request
 export const employeeSchema = (method: Method): ObjectSchema => {
   const schema: ObjectSchema = Joi.object({
-    name: Joi.when("$method", {
-      is: "POST",
-      then: Joi.string().required().min(3).messages({
-        "any.required": "Name is required",
-        "string.min": "Name length should greater than 3",
-      }),
-      otherwise: Joi.forbidden().messages({
-        "any.unknown": "Name is not allowed to be updated",
-      }),
+    id: Joi.number().optional().min(0).messages({
+      "number.min": "id should be positive",
     }),
+    name:
+      method === "POST"
+        ? Joi.string().required().min(3).messages({
+            "any.required": "Name is required",
+            "string.min": "Name length should greater than 3",
+          })
+        : Joi.forbidden().messages({
+            "any.forbidden": "Name is not allowed to be updated",
+          }),
 
     position:
       method === "POST"
@@ -39,11 +42,20 @@ export const employeeSchema = (method: Method): ObjectSchema => {
         ? Joi.string().required().email().messages({
             "any.required": "Email is required",
             "string.empty": "Email cannot be empty",
-            "string.email": "Email  is not valid",
+            "string.email": "Email is not valid",
           })
         : Joi.string().optional().email().messages({
             "string.empty": "Email cannot be empty",
-            "string.email": "Email  is not valid",
+            "string.email": "Email is not valid",
+          }),
+    phone:
+      method === "POST"
+        ? Joi.string().required().messages({
+            "any.required": "Phone is required",
+            "string.empty": "Phone cannot be empty",
+          })
+        : Joi.string().optional().messages({
+            "string.empty": "Phone cannot be empty",
           }),
     branchId:
       method === "POST"
@@ -51,10 +63,10 @@ export const employeeSchema = (method: Method): ObjectSchema => {
             "any.required": "BranchId is required",
             "number.min": "BranchId should be positive",
           })
-        : Joi.string().optional().min(0).messages({
+        : Joi.number().optional().min(0).messages({
             "number.min": "BranchId should be positive",
           }),
-  }).prefs({ context: { method } });
+  });
 
   return schema;
 };
