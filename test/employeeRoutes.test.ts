@@ -9,9 +9,9 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
+      expect(response.body.data).toBeInstanceOf(Array);
       // check the array length equal sample data length
-      expect(response.body.length).toEqual(sampleEmployeeData.length);
+      expect(response.body.data.length).toEqual(sampleEmployeeData.length);
     });
     it("should return all employee records as an array matching criteria when  query paramters provided", async () => {
       const department: string = "Operations";
@@ -23,9 +23,9 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
+      expect(response.body.data).toBeInstanceOf(Array);
       // check the array length
-      expect(response.body.length).toEqual(
+      expect(response.body.data.length).toEqual(
         sampleEmployeeData.filter(
           (v) => v.department === department && v.branchId === branchId
         ).length

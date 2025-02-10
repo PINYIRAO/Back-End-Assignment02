@@ -9,6 +9,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as employeeService from "../services/employeeService";
 import type { Employee } from "../models/employeeModel";
+import { successResponse } from "../models/responseModel";
 
 interface EmployeeQueryParams {
   department?: string;
@@ -32,7 +33,7 @@ export const getAllEmployees = async (
       branchId !== undefined ? parseInt(branchId) : undefined
     );
 
-    res.status(200).json(employees);
+    res.status(200).json(successResponse(employees));
   } catch (error) {
     next(error);
   }
@@ -54,7 +55,7 @@ export const getEmployeeById = async (
       parseInt(req.params.id)
     );
 
-    res.status(200).json({ message: "Employee Found", data: employee });
+    res.status(200).json(successResponse(employee, "Employee Found"));
   } catch (error) {
     next(error);
   }
@@ -76,7 +77,7 @@ export const createEmployee = async (
       req.body
     );
 
-    res.status(201).json({ message: "Employee Created", data: newEmployee });
+    res.status(201).json(successResponse(newEmployee, "Employee Created"));
   } catch (error) {
     next(error);
   }
@@ -99,9 +100,7 @@ export const updateEmployee = async (
       req.body
     );
 
-    res
-      .status(200)
-      .json({ message: "Employee Updated", data: updatedEmployee });
+    res.status(200).json(successResponse(updatedEmployee, "Employee Updated"));
   } catch (error) {
     next(error);
   }
@@ -122,9 +121,7 @@ export const deleteEmployee = async (
       parseInt(req.params.id)
     );
 
-    res
-      .status(200)
-      .json({ message: "Employee Deleted", data: removedEmployee });
+    res.status(200).json(successResponse(removedEmployee, "Employee Deleted"));
   } catch (error) {
     next(error);
   }

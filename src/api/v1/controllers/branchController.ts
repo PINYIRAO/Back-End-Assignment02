@@ -9,6 +9,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as branchService from "../services/branchService";
 import type { Branch } from "../models/branchModel";
+import { successResponse } from "../models/responseModel";
 
 /**
  * @description Get all branches.
@@ -23,7 +24,7 @@ export const getAllBranches = async (
   try {
     const branches: Branch[] = await branchService.getAllBranches();
 
-    res.status(200).json(branches);
+    res.status(200).json(successResponse(branches));
   } catch (error) {
     next(error);
   }
@@ -45,7 +46,7 @@ export const getBranchById = async (
       parseInt(req.params.id)
     );
 
-    res.status(200).json({ message: "Branch Found", data: branch });
+    res.status(200).json(successResponse(branch, "Branch Found"));
   } catch (error) {
     next(error);
   }
@@ -65,7 +66,7 @@ export const createBranch = async (
     // call the branchService by passing the body of the request
     const newBranch: Branch = await branchService.createBranch(req.body);
 
-    res.status(201).json({ message: "Branch Created", data: newBranch });
+    res.status(201).json(successResponse(newBranch, "Branch Created"));
   } catch (error) {
     next(error);
   }
@@ -88,7 +89,7 @@ export const updateBranch = async (
       req.body
     );
 
-    res.status(200).json({ message: "Branches Updated", data: updatedBranch });
+    res.status(200).json(successResponse(updatedBranch, "Branches Updated"));
   } catch (error) {
     next(error);
   }
@@ -109,7 +110,7 @@ export const deleteBranch = async (
       parseInt(req.params.id)
     );
 
-    res.status(200).json({ message: "Branch Deleted", data: removedBranch });
+    res.status(200).json(successResponse(removedBranch, "Branch Deleted"));
   } catch (error) {
     next(error);
   }

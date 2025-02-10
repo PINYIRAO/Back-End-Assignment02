@@ -9,9 +9,9 @@ describe("Branch Routes", () => {
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
+      expect(response.body.data).toBeInstanceOf(Array);
       // check the array length equal sample data length
-      expect(response.body.length).toEqual(sampleBranchData.length);
+      expect(response.body.data.length).toEqual(sampleBranchData.length);
     });
   });
   describe("GET /api/v1/branches/:id", () => {
