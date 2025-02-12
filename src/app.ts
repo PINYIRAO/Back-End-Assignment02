@@ -1,7 +1,7 @@
 // import the express application and type definition
 import express, { Express } from "express";
 // Importing morgan
-import morgan from "morgan";
+import { accessLogger } from "./api/v1/middleware/logger";
 // import setupSwagger endpoint
 import setupSwagger from "../config/swagger";
 // import routes
@@ -18,7 +18,7 @@ setupSwagger(app);
 app.use(express.json());
 
 // Use morgan for HTTP request logging
-app.use(morgan("combined"));
+app.use(accessLogger);
 
 app.use("/health", healthRoutes);
 app.use("/api/v1/employees", employeeRoutes);
