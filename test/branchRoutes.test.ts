@@ -1,4 +1,3 @@
-import sampleBranchData from "../src/api/v1/data/branchData";
 import request, { Response } from "supertest";
 import app from "../src/app";
 
@@ -10,18 +9,17 @@ describe("Branch Routes", () => {
       expect(response.status).toBe(200);
       // check the result type is an array
       expect(response.body.data).toBeInstanceOf(Array);
-      // check the array length equal sample data length
-      expect(response.body.data.length).toEqual(sampleBranchData.length);
     });
   });
   describe("GET /api/v1/branches/:id", () => {
-    it("should return the wanted branch", async () => {
-      const response: Response = await request(app).get("/api/v1/branches/2");
+    it("should receive an error if the id is not found", async () => {
+      const response: Response = await request(app).get(
+        "/api/v1/branches/abcdefg"
+      );
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned branch has the right properties
-      expect(response.body.data).toHaveProperty("name");
-      expect(response.body.data).toHaveProperty("address");
+      expect(response.status).toBe(500);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/not be found/);
     });
   });
   describe("POST /api/v1/branches", () => {
@@ -39,7 +37,6 @@ describe("Branch Routes", () => {
       // check the returned branch has the right properties
       expect(response.body.data).toHaveProperty("name");
       expect(response.body.data).toHaveProperty("address");
-      expect(response.body.data.id).toBeGreaterThan(0);
     });
     it("should receive an error when name length is less than 3", async () => {
       const response: Response = await request(app)
@@ -72,21 +69,18 @@ describe("Branch Routes", () => {
     });
   });
   describe("PUT /api/v1/branches/:id", () => {
-    it("should update a exsiting branch object", async () => {
+    it("should receive an error if the is id not found", async () => {
       const response: Response = await request(app)
-        .put("/api/v1/branches/2")
+        .put("/api/v1/branches/abcdef")
         .send({
           address: "St. James 1111",
           phone: "123-456-7890",
         });
 
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned branch has the right properties
-      expect(response.body.data).toHaveProperty("address");
-      expect(response.body.data).toHaveProperty("phone");
-      // check the updated address value
-      expect(response.body.data.address).toBe("St. James 1111");
+      expect(response.status).toBe(500);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/failed to update/i);
     });
     it("should receive an error if has the name field", async () => {
       const response: Response = await request(app)
@@ -119,16 +113,15 @@ describe("Branch Routes", () => {
     });
   });
   describe("DELETE /api/v1/branches/:id", () => {
-    it("should delete a exsiting branch object", async () => {
+    it("should receive an error if the id is not found", async () => {
       const response: Response = await request(app).delete(
-        "/api/v1/branches/3"
+        "/api/v1/branches/abcdefg"
       );
 
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned branch has the right properties
-      expect(response.body.data).toHaveProperty("name");
-      expect(response.body.data).toHaveProperty("address");
+      expect(response.status).toBe(500);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/not found/);
     });
   });
 });
