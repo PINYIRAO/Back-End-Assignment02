@@ -1,8 +1,12 @@
 import { Employee } from "../models/employeeModel";
 import employeeData from "../data/employeeData";
+import * as firestoreRepository from "../repositories/firestoreRepository";
+import { RepositoryError, ServiceError } from "../errors/errors";
+import { getErrorCode, getErrorMessage } from "../utils/errorUtils";
 
 // initialize the employee data using the given data in the assignments instruction
 const employees: Employee[] = employeeData;
+const Collection = "employees";
 
 function newEmployeeId(employees: Employee[]): number {
   // get the id for new employee
@@ -67,12 +71,24 @@ export const createEmployee = async (employee: {
   phone: string;
   branchId: number;
 }): Promise<Employee> => {
-  // define a new employee
-  const newEmployee: Employee = { ...employee, id: newEmployeeId(employees) };
+  try {
+    // define a new employee
+    const newEmployee: Employee = { ...employee, id: newEmployeeId(employees) };
 
-  // add the new employee to the global scoped array of employees
-  employees.push(newEmployee);
-  return newEmployee;
+    await firestoreRepository.createDocument(Collection, newEmployee);
+    return newEmployee;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to create document in ${Collection} with data: ${employee}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
+  }
 };
 
 /**
