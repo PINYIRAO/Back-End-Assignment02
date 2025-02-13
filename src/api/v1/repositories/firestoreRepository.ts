@@ -65,7 +65,7 @@ export const getDocuments = async (
     return await db.collection(collectionName).get();
   } catch (error) {
     throw new RepositoryError(
-      `Failed to fetch documents from ${collectionName}:, ${getErrorMessage(
+      `Failed to fetch documents from ${collectionName}: ${getErrorMessage(
         error
       )}`,
       getErrorCode(error)
@@ -91,7 +91,7 @@ export const getDocumentById = async (
     return doc?.exists ? doc : null;
   } catch (error) {
     throw new RepositoryError(
-      `Failed to fetch document ${id} from ${collectionName}:, ${getErrorMessage(
+      `Failed to fetch document ${id} from ${collectionName}: ${getErrorMessage(
         error
       )}`,
       getErrorCode(error)
@@ -115,7 +115,7 @@ export const updateDocument = async <T>(
     await db.collection(collectionName).doc(id).update(data);
   } catch (error) {
     throw new RepositoryError(
-      `Failed to update document ${id} in ${collectionName}:, ${getErrorMessage(
+      `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(
         error
       )}`,
       getErrorCode(error)
@@ -140,6 +140,10 @@ export const deleteDocument = async (
     const docRef: FirebaseFirestore.DocumentReference = db
       .collection(collectionName)
       .doc(id);
+    const docSnap: FirebaseFirestore.DocumentSnapshot = await docRef.get();
+    if (!docSnap.exists) {
+      throw new Error(`Id: ${id} is not found`);
+    }
     if (transaction) {
       transaction.delete(docRef);
     } else {
@@ -147,7 +151,7 @@ export const deleteDocument = async (
     }
   } catch (error) {
     throw new RepositoryError(
-      `Failed to delete document ${id} from ${collectionName}:, ${getErrorMessage(
+      `Failed to delete document ${id} from ${collectionName}: ${getErrorMessage(
         error
       )}`,
       getErrorCode(error)

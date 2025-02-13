@@ -1,20 +1,9 @@
 import { Employee } from "../models/employeeModel";
-import employeeData from "../data/employeeData";
 import * as firestoreRepository from "../repositories/firestoreRepository";
 import { RepositoryError, ServiceError } from "../errors/errors";
 import { getErrorCode, getErrorMessage } from "../utils/errorUtils";
 
-// initialize the employee data using the given data in the assignments instruction
-const employees: Employee[] = employeeData;
-const Collection = "employees";
-
-function newEmployeeId(employees: Employee[]): number {
-  // get the id for new employee
-  return employees.reduce(
-    (id, employee) => (id > employee.id ? id : employee.id) + 1,
-    0
-  );
-}
+const COLLECTION: string = "employees";
 
 /**
  * @description Get all employees that qualified with the optional parameters in  query， set the function async temporarily.
@@ -22,39 +11,69 @@ function newEmployeeId(employees: Employee[]): number {
  */
 export const getAllEmployees = async (
   department: string | undefined,
-  branchId: number | undefined
+  branchId: string | undefined
 ): Promise<Employee[]> => {
-  // filter the employees using the query parameter
-  let resultEmployees: Employee[] = employees;
-  if (department) {
-    resultEmployees = resultEmployees.filter(
-      (employee) => employee.department === department
-    );
-  }
-  if (branchId) {
-    resultEmployees = resultEmployees.filter(
-      (employee) => employee.branchId === branchId
-    );
-  }
+  try {
+    // filter the employees using the query parameter
 
-  return resultEmployees;
+    const snapshot: FirebaseFirestore.QuerySnapshot =
+      await firestoreRepository.getDocuments(COLLECTION);
+    let resultEmployees: Employee[] = snapshot.docs.map((doc) => {
+      const data: FirebaseFirestore.DocumentData = doc.data();
+      return { id: doc.id, ...data } as Employee;
+    });
+
+    if (department) {
+      resultEmployees = resultEmployees.filter(
+        (employee) => employee.department === department
+      );
+    }
+    if (branchId) {
+      resultEmployees = resultEmployees.filter(
+        (employee) => employee.branchId === branchId
+      );
+    }
+    return resultEmployees;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to get documents in ${COLLECTION}, ${getErrorMessage(error)}`,
+        getErrorCode(error)
+      );
+    }
+  }
 };
 
 /**
  * @description get an employee by id.
- * @param {number} id - The ID of the employee.
- * @returns {Promise<Employee>}
+ * @param {string} id - The ID of the employee.
+ * @returns {Promise<Employee|null>}
  * @throws {Error} If the employee with the given ID is not found.
  */
-export const getEmployeeById = async (id: number): Promise<Employee> => {
-  // retieve the Employee's index from the Employees array by comparing the Employee ids
-  const index: number = employees.findIndex((i) => i.id === id);
-  // if the index is not found we expects a -1
-  if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+export const getEmployeeById = async (id: string): Promise<Employee> => {
+  try {
+    const snapshot: FirebaseFirestore.DocumentSnapshot | null =
+      await firestoreRepository.getDocumentById(COLLECTION, id);
+    if (snapshot && snapshot.exists) {
+      const data: FirebaseFirestore.DocumentData = snapshot.data() || {};
+      return { id: snapshot.id, ...data } as Employee;
+    } else {
+      throw new Error(`Id: ${id} couldnot be found`);
+    }
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to get document by id in ${COLLECTION}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  return employees[index];
 };
 
 /**
@@ -69,20 +88,20 @@ export const createEmployee = async (employee: {
   department: string;
   email: string;
   phone: string;
-  branchId: number;
+  branchId: string;
 }): Promise<Employee> => {
   try {
-    // define a new employee
-    const newEmployee: Employee = { ...employee, id: newEmployeeId(employees) };
-
-    await firestoreRepository.createDocument(Collection, newEmployee);
-    return newEmployee;
+    const id: string = await firestoreRepository.createDocument(
+      COLLECTION,
+      employee
+    );
+    return { id, ...employee } as Employee;
   } catch (error: unknown) {
     if (error instanceof RepositoryError) {
       throw error;
     } else {
       throw new ServiceError(
-        `Failed to create document in ${Collection} with data: ${employee}, ${getErrorMessage(
+        `Failed to create document in ${COLLECTION} with data: ${employee}, ${getErrorMessage(
           error
         )}`,
         getErrorCode(error)
@@ -93,44 +112,52 @@ export const createEmployee = async (employee: {
 
 /**
  * @description Update an existing employee.
- * @param {number} targetId - The ID of the employee to update.
+ * @param {string} targetId - The ID of the employee to update.
  * @param {Partial<Employee>}
  * employee - the employee data
  * @returns {Promise<Employee>}
  * @throws {Error} If the employee with the given ID is not found.
  */
 export const updateEmployee = async (
-  targetId: number,
+  targetId: string,
   employee: Partial<Employee>
 ): Promise<Employee> => {
-  // retieve the Employee's index from the employees array by comparing the Employee ids
-  const index: number = employees.findIndex((i) => i.id === targetId);
-  // if the index is not found we expects a -1
-  if (index === -1) {
-    throw new Error(`Employee with ID ${targetId} not found`);
+  try {
+    await firestoreRepository.updateDocument(COLLECTION, targetId, employee);
+    return { id: targetId, ...employee } as Employee;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to update document with id: ${targetId} in ${COLLECTION} with data: ${employee}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  // protect the name and id properties
-  const { id, name, ...updateEmployee } = employee; // eslint-disable-line @typescript-eslint/no-unused-vars
-
-  // update the employee information of the found index
-  employees[index] = { ...employees[index], ...updateEmployee };
-
-  return employees[index];
 };
 
 /**
  * @description Delete an employee.
- * @param {number} id - The ID of the employee to delete.
- * @returns {Promise<Employee>}
+ * @param {string} id - The ID of the employee to delete.
+ * @returns {Promise<void>}
  * @throws {Error} If the employee with the given ID is not found.
  */
-export const deleteEmployee = async (id: number): Promise<Employee> => {
-  const index: number = employees.findIndex((i) => i.id === id);
-  if (index === -1) {
-    throw new Error(`Employee with ID ${id} not found`);
+export const deleteEmployee = async (id: string): Promise<void> => {
+  try {
+    await firestoreRepository.deleteDocument(COLLECTION, id);
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to delete document with id: ${id} in ${COLLECTION}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  // remove the employee from the employee array, start the delete form the index and only delete 1 index
-  return employees.splice(index, 1)[0];
 };

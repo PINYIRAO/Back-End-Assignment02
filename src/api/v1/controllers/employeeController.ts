@@ -30,7 +30,7 @@ export const getAllEmployees = async (
     const { department, branchId }: EmployeeQueryParams = req.query;
     const employees: Employee[] = await employeeService.getAllEmployees(
       department !== undefined ? department : undefined,
-      branchId !== undefined ? parseInt(branchId) : undefined
+      branchId !== undefined ? branchId : undefined
     );
 
     res.status(200).json(successResponse(employees));
@@ -52,7 +52,7 @@ export const getEmployeeById = async (
   try {
     // call the employeeService by passing the id from thge url path and the body of the request
     const employee: Employee = await employeeService.getEmployeeById(
-      parseInt(req.params.id)
+      req.params.id
     );
 
     res.status(200).json(successResponse(employee, "Employee Found"));
@@ -96,7 +96,7 @@ export const updateEmployee = async (
   try {
     // call the employeeService by passing the id from thge url path and the body of the request
     const updatedEmployee: Employee = await employeeService.updateEmployee(
-      parseInt(req.params.id),
+      req.params.id,
       req.body
     );
 
@@ -117,11 +117,9 @@ export const deleteEmployee = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedEmployee: Employee = await employeeService.deleteEmployee(
-      parseInt(req.params.id)
-    );
+    await employeeService.deleteEmployee(req.params.id);
 
-    res.status(200).json(successResponse(removedEmployee, "Employee Deleted"));
+    res.status(200).json(successResponse("Employee Deleted"));
   } catch (error) {
     next(error);
   }
