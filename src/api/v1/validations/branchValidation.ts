@@ -5,9 +5,9 @@ type Method = "POST" | "PUT";
 // for validating the branch data from post and put request
 export const branchSchema = (method: Method): ObjectSchema => {
   const schema: ObjectSchema = Joi.object({
-    id: Joi.number().optional().min(0).messages({
-      "number.min": "id should be positive",
-    }),
+    id: Joi.string()
+      .optional()
+      .messages({ "string.empty": "Id cannot be empty" }),
     name:
       method === "POST"
         ? Joi.string().required().min(3).messages({

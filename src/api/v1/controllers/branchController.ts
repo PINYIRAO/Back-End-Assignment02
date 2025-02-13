@@ -42,9 +42,7 @@ export const getBranchById = async (
 ): Promise<void> => {
   try {
     // call the branchService by passing the id from thge url path and the body of the request
-    const branch: Branch = await branchService.getBranchById(
-      parseInt(req.params.id)
-    );
+    const branch: Branch = await branchService.getBranchById(req.params.id);
 
     res.status(200).json(successResponse(branch, "Branch Found"));
   } catch (error) {
@@ -85,7 +83,7 @@ export const updateBranch = async (
   try {
     // call the branchService by passing the id from thge url path and the body of the request
     const updatedBranch: Branch = await branchService.updateBranch(
-      parseInt(req.params.id),
+      req.params.id,
       req.body
     );
 
@@ -106,11 +104,9 @@ export const deleteBranch = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedBranch: Branch = await branchService.deleteBranch(
-      parseInt(req.params.id)
-    );
+    await branchService.deleteBranch(req.params.id);
 
-    res.status(200).json(successResponse(removedBranch, "Branch Deleted"));
+    res.status(200).json(successResponse("Branch Deleted"));
   } catch (error) {
     next(error);
   }

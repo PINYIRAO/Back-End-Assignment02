@@ -7,7 +7,7 @@ export const employeeSchema = (method: Method): ObjectSchema => {
   const schema: ObjectSchema = Joi.object({
     id: Joi.string()
       .optional()
-      .messages({ "string.empty": "Phone cannot be empty" }),
+      .messages({ "string.empty": "Id cannot be empty" }),
     name:
       method === "POST"
         ? Joi.string().required().min(3).messages({

@@ -1,40 +1,65 @@
 import { Branch } from "../models/branchModel";
-import branchData from "../data/branchData";
+import * as firestoreRepository from "../repositories/firestoreRepository";
+import { RepositoryError, ServiceError } from "../errors/errors";
+import { getErrorCode, getErrorMessage } from "../utils/errorUtils";
 
-// initialize the branch data using the given data in the assignments instruction
-const branches: Branch[] = branchData;
-
-function newBranchId(branches: Branch[]): number {
-  // get the id for new branch
-  return branches.reduce(
-    (id, branch) => (id > branch.id ? id : branch.id) + 1,
-    0
-  );
-}
+const COLLECTION: string = "branches";
 
 /**
  * @description Get all branches set the function async temporarily.
  * @returns a Promise that resolves to an array of `Branch` objects.
  */
 export const getAllBranches = async (): Promise<Branch[]> => {
-  return branches;
+  try {
+    // filter the employees using the query parameter
+    const snapshot: FirebaseFirestore.QuerySnapshot =
+      await firestoreRepository.getDocuments(COLLECTION);
+    const branches: Branch[] = snapshot.docs.map((doc) => {
+      const data: FirebaseFirestore.DocumentData = doc.data();
+      return { id: doc.id, ...data } as Branch;
+    });
+
+    return branches;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to get documents in ${COLLECTION}, ${getErrorMessage(error)}`,
+        getErrorCode(error)
+      );
+    }
+  }
 };
 
 /**
  * @description get an branch by id.
- * @param {number} id - The ID of the branch.
+ * @param {string} id - The ID of the branch.
  * @returns {Promise<Branch>}
  * @throws {Error} If the branch with the given ID is not found.
  */
-export const getBranchById = async (id: number): Promise<Branch> => {
-  // retieve the Branch's index from the Branches array by comparing the Branch ids
-  const index: number = branches.findIndex((i) => i.id === id);
-  // if the index is not found we expects a -1
-  if (index === -1) {
-    throw new Error(`Branches with ID ${id} not found`);
+export const getBranchById = async (id: string): Promise<Branch> => {
+  try {
+    const snapshot: FirebaseFirestore.DocumentSnapshot | null =
+      await firestoreRepository.getDocumentById(COLLECTION, id);
+    if (snapshot && snapshot.exists) {
+      const data: FirebaseFirestore.DocumentData = snapshot.data() || {};
+      return { id: snapshot.id, ...data } as Branch;
+    } else {
+      throw new Error(`Id: ${id} couldnot be found`);
+    }
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to get document by id in ${COLLECTION}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  return branches[index];
 };
 
 /**
@@ -48,54 +73,74 @@ export const createBranch = async (branch: {
   address: string;
   phone: string;
 }): Promise<Branch> => {
-  // define a new branch
-  const newBranch: Branch = { ...branch, id: newBranchId(branches) };
-
-  // add the new branch to the global scoped array of branches
-  branches.push(newBranch);
-  return newBranch;
+  try {
+    const id: string = await firestoreRepository.createDocument(
+      COLLECTION,
+      branch
+    );
+    return { id, ...branch } as Branch;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to create document in ${COLLECTION} with data: ${branch}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
+  }
 };
 
 /**
  * @description Update an existing branch.
- * @param {number} targetId - The ID of the branch to update.
+ * @param {string} targetId - The ID of the branch to update.
  * @param {Partial<Branch>}
  * branch - the branch data
  * @returns {Promise<Branch>}
  * @throws {Error} If the branch with the given ID is not found.
  */
 export const updateBranch = async (
-  targetId: number,
+  targetId: string,
   branch: Partial<Branch>
 ): Promise<Branch> => {
-  // retieve the Branch's index from the branches array by comparing the Branch ids
-  const index: number = branches.findIndex((i) => i.id === targetId);
-  // if the index is not found we expects a -1
-  if (index === -1) {
-    throw new Error(`Branch with ID ${targetId} not found`);
+  try {
+    await firestoreRepository.updateDocument(COLLECTION, targetId, branch);
+    return { id: targetId, ...branch } as Branch;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to update document with id: ${targetId} in ${COLLECTION} with data: ${branch}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  // protect the name and id properties
-  const { id, name, ...updateBranch } = branch; // eslint-disable-line @typescript-eslint/no-unused-vars
-
-  // update the branch information of the found index
-  branches[index] = { ...branches[index], ...updateBranch };
-
-  return branches[index];
 };
 
 /**
  * @description Delete an branch.
- * @param {number} id - The ID of the branch to delete.
- * @returns {Promise<Branch>}
+ * @param {string} id - The ID of the branch to delete.
+ * @returns {Promise<void>}
  * @throws {Error} If the branch with the given ID is not found.
  */
-export const deleteBranch = async (id: number): Promise<Branch> => {
-  const index: number = branches.findIndex((i) => i.id === id);
-  if (index === -1) {
-    throw new Error(`Branch with ID ${id} not found`);
+export const deleteBranch = async (id: string): Promise<void> => {
+  try {
+    await firestoreRepository.deleteDocument(COLLECTION, id);
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new ServiceError(
+        `Failed to delete document with id: ${id} in ${COLLECTION}, ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error)
+      );
+    }
   }
-
-  // remove the branch from the branch array, start the delete form the index and only delete 1 index
-  return branches.splice(index, 1)[0];
 };
