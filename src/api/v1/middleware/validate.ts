@@ -1,6 +1,7 @@
 // External library imports
 import { Request, Response, NextFunction } from "express";
 import { ObjectSchema } from "joi";
+import { ValidationError } from "../errors/errors";
 
 // internal module imports
 import { MiddlewareFunction, RequestData } from "../types/expressTypes";
@@ -14,7 +15,7 @@ import { MiddlewareFunction, RequestData } from "../types/expressTypes";
 export const validate = <T>(schema: ObjectSchema<T>, data: T): void => {
   const { error } = schema.validate(data, { abortEarly: false });
   if (error) {
-    throw new Error(
+    throw new ValidationError(
       `Validation error: ${error.details.map((x) => x.message).join(", ")}`
     );
   }
@@ -37,7 +38,7 @@ export const validateRequest = (schema: ObjectSchema): MiddlewareFunction => {
       validate(schema, data);
       next();
     } catch (error) {
-      res.status(400).json({ error: (error as Error).message });
+      throw new ValidationError((error as Error).message);
     }
   };
 };

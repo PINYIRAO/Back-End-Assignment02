@@ -76,8 +76,8 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch("should greater than 3");
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/should greater than 3/i);
     });
     it("should receive an error when position field is missing", async () => {
       const response: Response = await request(app)
@@ -93,8 +93,8 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/position is required/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/position is required/i);
     });
   });
   describe("PUT /api/v1/employees/:id", () => {
@@ -132,8 +132,8 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/is not allowed to be updated/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/is not allowed to be updated/i);
     });
     it("should receive an error if branchid is not a number", async () => {
       const response: Response = await request(app)
@@ -150,8 +150,8 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/must be a number/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/must be a number/i);
     });
   });
   describe("DELETE /api/v1/employees/:id", () => {

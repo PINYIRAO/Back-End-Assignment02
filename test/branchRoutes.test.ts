@@ -53,8 +53,8 @@ describe("Branch Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch("should greater than 3");
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/should greater than 3/i);
     });
     it("should receive an error when address field is missing", async () => {
       const response: Response = await request(app)
@@ -67,8 +67,8 @@ describe("Branch Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/address is required/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/address is required/i);
     });
   });
   describe("PUT /api/v1/branches/:id", () => {
@@ -100,8 +100,8 @@ describe("Branch Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/is not allowed to be updated/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/is not allowed to be updated/i);
     });
     it("should receive an error if phone is an empty string", async () => {
       const response: Response = await request(app)
@@ -114,8 +114,8 @@ describe("Branch Routes", () => {
       // check the status
       expect(response.status).toBe(400);
       // check han return an object containing message
-      expect(response.body).toHaveProperty("error");
-      expect(response.body.error).toMatch(/cannot be empty/i);
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/cannot be empty/i);
     });
   });
   describe("DELETE /api/v1/branches/:id", () => {
