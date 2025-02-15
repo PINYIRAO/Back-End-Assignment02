@@ -17,9 +17,9 @@ describe("Branch Routes", () => {
         "/api/v1/branches/abcdefg"
       );
       // check the status
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
       expect(response.body.status).toMatch(/error/);
-      expect(response.body.message).toMatch(/not be found/);
+      expect(response.body.message).toMatch(/not found/);
     });
   });
   describe("POST /api/v1/branches", () => {
@@ -119,7 +119,7 @@ describe("Branch Routes", () => {
       );
 
       // check the status
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
       expect(response.body.status).toMatch(/error/);
       expect(response.body.message).toMatch(/not found/);
     });

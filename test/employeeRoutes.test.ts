@@ -29,9 +29,9 @@ describe("Employee Routes", () => {
         "/api/v1/employees/abcdefg"
       );
       // check the status
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
       expect(response.body.status).toMatch(/error/);
-      expect(response.body.message).toMatch(/not be found/);
+      expect(response.body.message).toMatch(/not found/);
     });
   });
   describe("POST /api/v1/employees", () => {
@@ -150,7 +150,7 @@ describe("Employee Routes", () => {
       );
 
       // check the status
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
       expect(response.body.status).toMatch(/error/);
       expect(response.body.message).toMatch(/not found/);
     });
