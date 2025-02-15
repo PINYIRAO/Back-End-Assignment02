@@ -5,6 +5,7 @@ import { ValidationError } from "../errors/errors";
 
 // internal module imports
 import { MiddlewareFunction, RequestData } from "../types/expressTypes";
+import { getErrorCode } from "../utils/errorUtils";
 
 /**
  * Function to validate data using a schema.
@@ -16,7 +17,8 @@ export const validate = <T>(schema: ObjectSchema<T>, data: T): void => {
   const { error } = schema.validate(data, { abortEarly: false });
   if (error) {
     throw new ValidationError(
-      `Validation error: ${error.details.map((x) => x.message).join(", ")}`
+      `Validation error: ${error.details.map((x) => x.message).join(", ")}`,
+      "getErrorCode(error)"
     );
   }
 };
@@ -38,7 +40,7 @@ export const validateRequest = (schema: ObjectSchema): MiddlewareFunction => {
       validate(schema, data);
       next();
     } catch (error) {
-      throw new ValidationError((error as Error).message);
+      throw new ValidationError((error as Error).message, getErrorCode(error));
     }
   };
 };

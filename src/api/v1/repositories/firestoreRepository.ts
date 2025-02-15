@@ -1,7 +1,12 @@
 import db from "../../../../config/firebaseConfig";
 import { FirestoreDataTypes } from "../types/firestore";
 import { RepositoryError } from "../errors/errors";
-import { getErrorCode, getErrorMessage } from "../utils/errorUtils";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
+import {
+  getErrorCode,
+  getErrorMessage,
+  getFirebaseErrorStatusCode,
+} from "../utils/errorUtils";
 
 /**
  * Represents a field-value pair used for querying documents.
@@ -43,12 +48,13 @@ export const createDocument = async <T>(
     }
 
     return docRef.id;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new RepositoryError(
       `Failed to create document in ${collectionName} with data: ${data}, ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
@@ -68,7 +74,8 @@ export const getDocuments = async (
       `Failed to fetch documents from ${collectionName}: ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
@@ -88,13 +95,25 @@ export const getDocumentById = async (
       .collection(collectionName)
       .doc(id)
       .get();
-    return doc?.exists ? doc : null;
-  } catch (error) {
+
+    if (!doc.exists) {
+      throw new RepositoryError(
+        `Document not found in collection ${collectionName} with id ${id}`,
+        "DOCUMENT_NOT_FOUND",
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+    return doc;
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    }
     throw new RepositoryError(
       `Failed to fetch document ${id} from ${collectionName}: ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
@@ -113,12 +132,13 @@ export const updateDocument = async <T>(
 ): Promise<void> => {
   try {
     await db.collection(collectionName).doc(id).update(data);
-  } catch (error) {
+  } catch (error: unknown) {
     throw new RepositoryError(
       `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
@@ -142,19 +162,27 @@ export const deleteDocument = async (
       .doc(id);
     const docSnap: FirebaseFirestore.DocumentSnapshot = await docRef.get();
     if (!docSnap.exists) {
-      throw new Error(`Id: ${id} is not found`);
+      throw new RepositoryError(
+        `Document not found in collection ${collectionName} with id ${id}`,
+        "DOCUMENT_NOT_FOUND",
+        HTTP_STATUS.NOT_FOUND
+      );
     }
     if (transaction) {
       transaction.delete(docRef);
     } else {
       await docRef.delete();
     }
-  } catch (error) {
+  } catch (error: unknown) {
+    if (error instanceof RepositoryError) {
+      throw error;
+    }
     throw new RepositoryError(
       `Failed to delete document ${id} from ${collectionName}: ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
@@ -195,15 +223,16 @@ export const deleteDocumentsByFieldValues = async (
       });
       await batch.commit();
     }
-  } catch (error) {
+  } catch (error: unknown) {
     const fieldValueString: string = fieldValuePairs
       .map(({ fieldName, fieldValue }) => `${fieldName} == ${fieldValue}`)
       .join(" AND ");
     throw new RepositoryError(
-      `Failed to delete documents from ${collectionName} where ${fieldValueString}:, ${getErrorMessage(
+      `Failed to delete documents from ${collectionName} where ${fieldValueString}: ${getErrorMessage(
         error
       )}`,
-      getErrorCode(error)
+      getErrorCode(error),
+      getFirebaseErrorStatusCode(error)
     );
   }
 };
