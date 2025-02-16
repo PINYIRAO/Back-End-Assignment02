@@ -1,52 +1,42 @@
 # Debugging Analysis
 
-## Scenario 1: create a new employee
+## Scenario 1: track the employee validation Joi schema being created
 
 -   **Breakpoint Location:** [File and line number]
 
-Answer: line 71 in employeeService.ts
+Answer: line 13 in employeeValidation.ts
 -   **Objective:** [What you are investigating or trying to understand]
 
-Answer: watch how new employee created  
+Answer: Check whether it works to apply method-type based judgement during schema creation.
 
 ### Debugger Observations
 
 -   **Variable States:** [List key variables and their values]
-
 Answer: 
-variable name: newEmployee
+variable name: method
 variable value:
-{
-  id: 36,
-  name: "pinyi",
-  position: "software developer",
-  department: "IT",
-  email: "PINYI.R@example.com",
-  phone: "123-456-7890",
-  branchId: 1,
-}
+"POST"
+
 -   **Call Stack:** [Summarize the function sequence leading to the breakpoint]
-
 Answer: I don't need to observe it in the scenario.
--   **Behavior:** 
 
+-   **Behavior:** 
 Answer:
-The application create a new employee with the values provided in the request body and assign a unique epmloyee id for it.
+When I send a post method, it shows the judgement works.
 
 ### Analysis
 
 -   What did you learn from this scenario?
+Answer: I could combine the condition judgement to create more simple code to meet the business requirements.
 
-Answer: destructure the object could make the code more simple and readable.
 -   Did you observe any unexpected behavior? If so, what might be the cause?
+Answer: Yes. When I started the debugger in vscode, I found the code would stop at the breakpoint. But at that time, I sent no request. It didn't make sense. When I looked into it, I found that in route configuration, I configured the validate middleware in the invocation immediately mode.
 
-Answer: No for this moment.
 -   Are there areas for improvement or refactoring in this part of the code?
-
 Answer: At this moment, there are no obvious areas for improvement or refactoring.
--   How does this enhance your understanding of the overall project?
 
-Answer: I found that if there is extra properties not related to the employee, it also could be stored in the employee data, so we need data validation for request body or model validation when create new employee.
+-   How does this enhance your understanding of the overall project?
+Answer: The debugging scenario helped me gain a deeper understanding of function invocation and reference.
 
 ## Scenario 2: when the request handling ends
 
