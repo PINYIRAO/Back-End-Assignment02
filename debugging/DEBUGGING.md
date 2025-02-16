@@ -38,42 +38,37 @@ Answer: At this moment, there are no obvious areas for improvement or refactorin
 -   How does this enhance your understanding of the overall project?
 Answer: The debugging scenario helped me gain a deeper understanding of function invocation and reference.
 
-## Scenario 2: when the request handling ends
-
+## Scenario 2: when the document couldnot be found while trying to delete it
 -   **Breakpoint Location:** [File and line number]
+Answer: line 165 in firestoreRepository.ts
 
-Answer: line 24 in branchController.ts
 -   **Objective:** [What you are investigating or trying to understand]
-
-Answer: watch when the request handling ends 
+Answer: the process mechanism when there is no specific document in firestore 
 
 ### Debugger Observations
-
 -   **Variable States:** [List key variables and their values]
+Answer: 
+variable name: docSnap
+variable value:
+there is an exists property in docSnap, when the docSnap has no content, it would be false
 
-Answer: I don't need to observe it in the scenario.
 -   **Call Stack:** [Summarize the function sequence leading to the breakpoint]
-
 Answer: I don't need to observe it in the scenario.
--   **Behavior:** 
 
+-   **Behavior:** 
 Answer:
-After run "res.status(200).json(branches);", the response is generated and sent to the client.
+When we query a document by its specific ID and the document is not found, we can use the DocumentSnapshot.exists property to determine whether the document exists or not.
 
 ### Analysis
-
 -   What did you learn from this scenario?
-
-Answer: res.json could be the end the request handling process.
--   Did you observe any unexpected behavior? If so, what might be the cause?
+Answer: how to judge if there is a document has the specific id
 
 Answer: No for this moment.
 -   Are there areas for improvement or refactoring in this part of the code?
-
 Answer: No for this moment.
--   How does this enhance your understanding of the overall project?
 
-Answer: I have learned that when is the time for request handling process ending.
+-   How does this enhance your understanding of the overall project?
+Answer: when no documents match the query conditions, Firestore does not raise an error. We need to handle this case manually and raise an error by ourself if we want to provide a user-friendly experience..
 
 
 ## Scenario 3: when query parameters not provided, what would happen when get their values?
