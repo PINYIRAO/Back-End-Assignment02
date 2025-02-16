@@ -22,7 +22,7 @@ Answer: I don't need to observe it in the scenario.
 
 -   **Behavior:** 
 Answer:
-When I send a post method, it shows the judgement works.
+When I send a post request, it shows the judgement works.
 
 ### Analysis
 
