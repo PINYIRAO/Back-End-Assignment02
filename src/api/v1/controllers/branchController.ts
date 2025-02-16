@@ -10,6 +10,7 @@ import { Request, Response, NextFunction } from "express";
 import * as branchService from "../services/branchService";
 import type { Branch } from "../models/branchModel";
 import { successResponse } from "../models/responseModel";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 /**
  * @description Get all branches.
@@ -24,7 +25,7 @@ export const getAllBranches = async (
   try {
     const branches: Branch[] = await branchService.getAllBranches();
 
-    res.status(200).json(successResponse(branches));
+    res.status(HTTP_STATUS.OK).json(successResponse(branches));
   } catch (error) {
     next(error);
   }
@@ -44,7 +45,7 @@ export const getBranchById = async (
     // call the branchService by passing the id from thge url path and the body of the request
     const branch: Branch = await branchService.getBranchById(req.params.id);
 
-    res.status(200).json(successResponse(branch, "Branch Found"));
+    res.status(HTTP_STATUS.OK).json(successResponse(branch, "Branch Found"));
   } catch (error) {
     next(error);
   }
@@ -64,7 +65,9 @@ export const createBranch = async (
     // call the branchService by passing the body of the request
     const newBranch: Branch = await branchService.createBranch(req.body);
 
-    res.status(201).json(successResponse(newBranch, "Branch Created"));
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json(successResponse(newBranch, "Branch Created"));
   } catch (error) {
     next(error);
   }
@@ -87,7 +90,9 @@ export const updateBranch = async (
       req.body
     );
 
-    res.status(200).json(successResponse(updatedBranch, "Branches Updated"));
+    res
+      .status(HTTP_STATUS.OK)
+      .json(successResponse(updatedBranch, "Branches Updated"));
   } catch (error) {
     next(error);
   }
@@ -106,7 +111,7 @@ export const deleteBranch = async (
   try {
     await branchService.deleteBranch(req.params.id);
 
-    res.status(200).json(successResponse("Branch Deleted"));
+    res.status(HTTP_STATUS.OK).json(successResponse("Branch Deleted"));
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as employeeController from "../controllers/employeeController";
 import { validateRequest } from "../middleware/validate";
 import { employeeSchema } from "../validations/employeeValidation";
+import { Request, Response, NextFunction } from "express";
 
 // define a router for deal with
 const router: Router = Router();
@@ -90,7 +91,8 @@ router.get("/:id", employeeController.getEmployeeById);
  */
 router.post(
   "/",
-  validateRequest(employeeSchema("POST")),
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(employeeSchema("POST"))(req, res, next),
   employeeController.createEmployee
 );
 
@@ -132,7 +134,8 @@ router.post(
  */
 router.put(
   "/:id",
-  validateRequest(employeeSchema("PUT")),
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(employeeSchema("PUT"))(req, res, next),
   employeeController.updateEmployee
 );
 
