@@ -16,5 +16,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "22"
+      - name: Create Firebase credentials file
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' >backend-employee-management-firebase-adminsdk-fbsvc-eda7eb54e3.json
       - run: npm install jest ts-jest supertest
       - run: npm test

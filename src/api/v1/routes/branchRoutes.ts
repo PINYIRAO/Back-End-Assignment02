@@ -1,5 +1,8 @@
 import { Router } from "express";
 import * as branchController from "../controllers/branchController";
+import { validateRequest } from "../middleware/validate";
+import { branchSchema } from "../validations/branchValidation";
+import { Request, Response, NextFunction } from "express";
 
 // define a router for deal with
 const router: Router = Router();
@@ -69,7 +72,12 @@ router.get("/:id", branchController.getBranchById);
  *    201:
  *     description: the new branch
  */
-router.post("/", branchController.createBranch);
+router.post(
+  "/",
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(branchSchema("POST"))(req, res, next),
+  branchController.createBranch
+);
 
 /**
  * @route PUT /:id
@@ -101,7 +109,12 @@ router.post("/", branchController.createBranch);
  *       200:
  *         description: The updated branch
  */
-router.put("/:id", branchController.updateBranch);
+router.put(
+  "/:id",
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(branchSchema("PUT"))(req, res, next),
+  branchController.updateBranch
+);
 
 /**
  * @route DELETE /:id
