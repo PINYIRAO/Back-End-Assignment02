@@ -68,46 +68,44 @@ Answer: No for this moment.
 Answer: No for this moment.
 
 -   How does this enhance your understanding of the overall project?
-Answer: when no documents match the query conditions, Firestore does not raise an error. We need to handle this case manually and raise an error by ourself if we want to provide a user-friendly experience..
+Answer: when no documents match the query conditions, Firestore does not raise an error. We need to handle this case manually and raise an error by ourself if we want to provide a user-friendly experience.
 
 
-## Scenario 3: when query parameters not provided, what would happen when get their values?
+## Scenario 3: Watch how the error-handling middleware function handles errors when a document does not exist
 
 -   **Breakpoint Location:** [File and line number]
+Answer: line 56 in errorHandler.ts
 
-Answer: line 29 in employeeController.ts
 -   **Objective:** [What you are investigating or trying to understand]
-
-Answer: watch the parameters default value when not provided
+Answer: watch the error object handled and the process of error handling
 
 ### Debugger Observations
-
 -   **Variable States:** [List key variables and their values]
-
-Answer: when I sent a request only providing department parameter in query, I got the variable values through the code
-"const { department, branchId }: EmployeeQueryParams = req.query;":
-department: IT
-branchId: undefined
--   **Call Stack:** [Summarize the function sequence leading to the breakpoint]
-
-Answer: I don't need to observe it in the scenario.
--   **Behavior:** 
-
 Answer:
-When the parameter not provided in query, it would be set as the default value undefined
+variable: err,
+value:
+code:"DOCUMENT_NOT_FOUND"
+name:"RepositoryError"
+statuscode:404
+message:"Document not found in collection employees with id po8ih8rM3mHBRr2oFyrZ"
+
+-   **Call Stack:** [Summarize the function sequence leading to the breakpoint]
+Answer: I don't need to observe it in the scenario.
+
+-   **Behavior:** 
+Answer:
+When the program throws an error, the error handler takes over and provides the user with a meaningful response, including error details.
 
 ### Analysis
 
 -   What did you learn from this scenario?
+Answer: I learned when the error handler is triggered, and how it will end the request processing.
 
-Answer: how to deal with query parameter.
 -   Did you observe any unexpected behavior? If so, what might be the cause?
-
 Answer: No for this moment.
--   Are there areas for improvement or refactoring in this part of the code?
 
+-   Are there areas for improvement or refactoring in this part of the code?
 Answer: No for this moment.
 
 -   How does this enhance your understanding of the overall project?
-
-Answer: I have learned that the paramter would be undefined when not provided which could let me how to defined the type in TS project.
+Answer: I have learned that the error handler can provide the user with a consistent and meaningful response, depending on whether the program itself provides meaningful error messages and a consistent error type definition.
