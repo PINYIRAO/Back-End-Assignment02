@@ -131,15 +131,33 @@ export const updateDocument = async <T>(
   data: Partial<T>
 ): Promise<void> => {
   try {
+    // before update do the check to see if the given id exists
+    const doc: FirebaseFirestore.DocumentSnapshot = await db
+      .collection(collectionName)
+      .doc(id)
+      .get();
+
+    if (!doc.exists) {
+      throw new RepositoryError(
+        `Failed to update: Document not found with given id ${id} in collection ${collectionName} `,
+        "DOCUMENT_NOT_FOUND",
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
     await db.collection(collectionName).doc(id).update(data);
   } catch (error: unknown) {
-    throw new RepositoryError(
-      `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(
-        error
-      )}`,
-      getErrorCode(error),
-      getFirebaseErrorStatusCode(error)
-    );
+    if (error instanceof RepositoryError) {
+      throw error;
+    } else {
+      throw new RepositoryError(
+        `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(
+          error
+        )}`,
+        getErrorCode(error),
+        getFirebaseErrorStatusCode(error)
+      );
+    }
   }
 };
 
