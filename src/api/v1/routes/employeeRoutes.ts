@@ -14,23 +14,14 @@ const router: Router = Router();
 /**
  * @openapi
  * /api/v1/employees:
- *  get:
- *   summary: Get all employees matching the criteria
- *   tags: [Employee]
- *   parameters:
- *    - in: query
- *      name: branchId
- *      schema:
- *        type: string
- *      description: Filter employees by branch ID.
- *    - in: query
- *      name: department
- *      schema:
- *        type: string
- *      description: Filter employees by department name.
- *   responses:
- *    200:
- *     description: All employess  matching the criteria
+ *   get:
+ *     summary: Get all employees
+ *     tags: [Employee]
+ *     responses:
+ *         200:
+ *           description: All employess  matching the criteria
+ *         500:
+ *           description: Server error
  */
 router.get("/", employeeController.getAllEmployees);
 
@@ -54,6 +45,10 @@ router.get("/", employeeController.getAllEmployees);
  *     responses:
  *       200:
  *         description: The wanted employee
+ *       404:
+ *         description: No branch found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.get("/:id", employeeController.getEmployeeById);
 
@@ -88,6 +83,8 @@ router.get("/:id", employeeController.getEmployeeById);
  *   responses:
  *    201:
  *     description: the new employee
+ *    500:
+ *     description: Server error
  */
 router.post(
   "/",
@@ -131,6 +128,10 @@ router.post(
  *     responses:
  *       200:
  *         description: The updated employee
+ *       404:
+ *         description: No employee found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.put(
   "/:id",
@@ -158,7 +159,11 @@ router.put(
  *         description: ID of the employee to be deleted
  *     responses:
  *       200:
- *         description: The deleted employee
+ *         description: Delete successfully
+ *       404:
+ *         description: No employee found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.delete("/:id", employeeController.deleteEmployee);
 

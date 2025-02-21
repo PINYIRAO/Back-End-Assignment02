@@ -14,12 +14,14 @@ const router: Router = Router();
 /**
  * @openapi
  * /api/v1/branches:
- *  get:
- *   summary: Get all branches
- *   tags: [Branch]
- *   responses:
- *    200:
- *     description: All branches
+ *   get:
+ *     summary: Get all branches
+ *     tags: [Branch]
+ *     responses:
+ *         200:
+ *           description: All branches
+ *         500:
+ *           description: Server error
  */
 router.get("/", branchController.getAllBranches);
 
@@ -43,6 +45,10 @@ router.get("/", branchController.getAllBranches);
  *     responses:
  *       200:
  *         description: The wanted branch
+ *       404:
+ *         description: No branch found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.get("/:id", branchController.getBranchById);
 
@@ -69,8 +75,10 @@ router.get("/:id", branchController.getBranchById);
  *             phone:
  *               type: string
  *   responses:
- *    201:
- *     description: the new branch
+ *     201:
+ *       description: the new branch
+ *     500:
+ *       description: Server error
  */
 router.post(
   "/",
@@ -108,6 +116,10 @@ router.post(
  *     responses:
  *       200:
  *         description: The updated branch
+ *       404:
+ *         description: No branch found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.put(
   "/:id",
@@ -134,8 +146,12 @@ router.put(
  *         required: true
  *         description: ID of the branch to be deleted
  *     responses:
- *       200:
- *         description: The deleted branch
+ *      200:
+ *         description: Delete successfully
+ *      404:
+ *        description: No branch found with the specified id
+ *      500:
+ *        description: Server error
  */
 router.delete("/:id", branchController.deleteBranch);
 
