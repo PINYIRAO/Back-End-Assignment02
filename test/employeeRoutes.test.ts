@@ -102,7 +102,7 @@ describe("Employee Routes", () => {
         });
 
       // check the status
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
       expect(response.body.status).toMatch(/error/);
       expect(response.body.message).toMatch(/failed to update/i);
     });
