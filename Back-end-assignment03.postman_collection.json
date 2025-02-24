@@ -37,7 +37,72 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "01-create-happy case",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \r\n        \"name\": \"Joh\",\r\n        \"position\": \"Branch Manager\",\r\n        \"department\": \"Management\",\r\n        \"email\": \"john.black@pixell-river.com\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": \"23\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "230"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e6-7yZABJHKPSNpZNXNVsvy2vG1ViM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:38:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"15iw9xWnsWeFiwf2ZosM\",\n        \"name\": \"Joh\",\n        \"position\": \"Branch Manager\",\n        \"department\": \"Management\",\n        \"email\": \"john.black@pixell-river.com\",\n        \"phone\": \"204-555-0466\",\n        \"branchId\": \"23\"\n    },\n    \"message\": \"Employee Created\"\n}"
+						}
+					]
 				},
 				{
 					"name": "01-create-negative case",
@@ -46,7 +111,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \r\n        \"name\": \"Joh\",\r\n        \"position\": \"Branch Manager\",\r\n        \"department\": \"Management\",\r\n        \"email\": \"john.black@pixell-river.com\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": 2}",
+							"raw": "{\r\n        \r\n        \"position\": \"Branch Manager\",\r\n        \"department\": \"Management\",\r\n        \"email\": \"john.black@pixell-river.com\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": 2}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -67,7 +132,72 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "01-create-negative case",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \r\n        \"position\": \"Branch Manager\",\r\n        \"department\": \"Management\",\r\n        \"email\": \"john.black@pixell-river.com\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": 2}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "122"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7a-hwyHJWPNwx/7bqFoTAycKiCKvbw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:39:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation error: Name is required, \\\"branchId\\\" must be a string\",\n    \"code\": \"VALIDATION_ERROR\"\n}"
+						}
+					]
 				},
 				{
 					"name": "02-put-happy case",
@@ -99,12 +229,84 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "po8ih8rM3mHBRr2oFyrZ"
+									"value": "15iw9xWnsWeFiwf2ZosM"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "02-put-happy case",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{       \r\n        \"position\": \"abc\",\r\n        \"department\": \"DFfdfd\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": \"dfd6\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "15iw9xWnsWeFiwf2ZosM"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a6-juzvooS1rj+dLdGgHCHVbZs/bUw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:40:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"15iw9xWnsWeFiwf2ZosM\",\n        \"position\": \"abc\",\n        \"department\": \"DFfdfd\",\n        \"phone\": \"204-555-0466\",\n        \"branchId\": \"dfd6\"\n    },\n    \"message\": \"Employee Updated\"\n}"
+						}
+					]
 				},
 				{
 					"name": "02-put-negative case",
@@ -141,7 +343,79 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "02-put-negative case",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{       \"name\":\"zyx\",\r\n        \"position\": \"abc\",\r\n        \"department\": \"DFfdfd\",\r\n        \"phone\": \"204-555-0466\",\r\n        \"branchId\": \"dfd6\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "108"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6c-sIeR/ze8+keOnteFmc7IOURhzdM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:41:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation error: Name is not allowed to be updated\",\n    \"code\": \"VALIDATION_ERROR\"\n}"
+						}
+					]
 				},
 				{
 					"name": "03-get-all-employees-happy case",
@@ -162,7 +436,63 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "03-get-all-employees-happy case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5771"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"168b-9cFMpccjVcJCvvNHpK3P+BhIMfE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:41:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": \"15iw9xWnsWeFiwf2ZosM\",\n            \"name\": \"Joh\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"dfd6\",\n            \"position\": \"abc\",\n            \"department\": \"DFfdfd\"\n        },\n        {\n            \"id\": \"2WL5Pi2gVR0eeslgUT95\",\n            \"name\": \"Joh\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"dfd6\",\n            \"position\": \"abc\",\n            \"department\": \"DFfdfd\"\n        },\n        {\n            \"id\": \"34kajiqFac0HsuvCqe2d\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"5GYuMMK4zkAz94ChRX1N\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"7R9oskL64SmZOzqrZZ3x\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"9cvLa7pT7p8EnLE6fkUr\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"AFHUtIIdt2pJMQV5HTSH\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"AYkR7Fkmk52EFIjYueKO\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"E5NLURoHWkxeydYOZYMb\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"FNYB2ijfRn1QSbHmZOTA\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"Giu0dMODnIIuxH0xjlpK\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"OB6Q6322Qaf8dLUc0rUM\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"PyoK1T8drdSRNIArZbYp\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"WsYf7hz36lzxNdGR5ChO\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"aoPytlFtc03VN9mjRF6s\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"bB4Rnjg3mNGfSeuciVHd\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"derxGAEv1tnflBbEiHVD\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"fqa33jydR6XqUnor795s\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"hW8lt0fibOdWz0zt0gNa\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"i5VmqARFPlWYWaLdEgss\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"ibDAmxE8ok0pxCj7C4n0\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"keMigHfa0CipB0LmanKs\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"nL7bn80WNrd2oPdpgzCX\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"nPHZAbUMGqmscsncTp6h\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"nnLg5mgvpzqJaQRVBHlY\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"pvSLObWLyeUnMKvtPpm1\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"saPC7hLX3Ydo1U6zu0uY\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"snxKigdId4xBkkwUpC3y\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"unIYx8ECFr5u1J4wQPgU\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"wYSIXAcrWcAmeflbrzM5\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"wYVEvqtneRPyOjx8xaXa\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"wg00NBcvtO4OaGfrX2Uu\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"x5m7xfEeaN2g9ICnUoKN\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"y4YvrF2hOx4ZxbCiXMRr\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        },\n        {\n            \"id\": \"zPbcGR74eZwKgRfHnSOy\",\n            \"name\": \"Joh\",\n            \"position\": \"Branch Manager\",\n            \"department\": \"Management\",\n            \"email\": \"john.black@pixell-river.com\",\n            \"phone\": \"204-555-0466\",\n            \"branchId\": \"23\"\n        },\n        {\n            \"id\": \"zZuOVqFioyWsVLKHuDDT\",\n            \"name\": \"pinyi\",\n            \"position\": \"it\",\n            \"department\": \"IT\",\n            \"email\": \"prao@email.com\",\n            \"phone\": \"123-456-7890\",\n            \"branchId\": \"12\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "04-get-EmployeeById-happy case",
@@ -185,12 +515,75 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "po8ih8rM3mHBRr2oFyrZ"
+									"value": "snxKigdId4xBkkwUpC3y"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "04-get-EmployeeById-happy case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "snxKigdId4xBkkwUpC3y"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "228"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e4-qNBPdR/ndon1+Dq3j3TlfkBgOQg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:41:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"snxKigdId4xBkkwUpC3y\",\n        \"name\": \"Joh\",\n        \"position\": \"Branch Manager\",\n        \"department\": \"Management\",\n        \"email\": \"john.black@pixell-river.com\",\n        \"phone\": \"204-555-0466\",\n        \"branchId\": \"23\"\n    },\n    \"message\": \"Employee Found\"\n}"
+						}
+					]
 				},
 				{
 					"name": "04-get-employeeById-negative case",
@@ -218,7 +611,70 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "04-get-employeeById-negative case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "113"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"71-OZMMLQfe3LziNCXxzMAF2Df5c0I\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:41:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Document not found in collection employees with id 123\",\n    \"code\": \"DOCUMENT_NOT_FOUND\"\n}"
+						}
+					]
 				},
 				{
 					"name": "05-deleteEmployeeById-happy case",
@@ -241,12 +697,75 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "po8ih8rM3mHBRr2oFyrZ"
+									"value": "5GYuMMK4zkAz94ChRX1N"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "05-deleteEmployeeById-happy case",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5GYuMMK4zkAz94ChRX1N"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-3LyNJtvAu+eLeDUehnZM97byPAM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:42:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": \"Employee Deleted\"\n}"
+						}
+					]
 				},
 				{
 					"name": "05-deleteEmployeeById-negative case",
@@ -274,7 +793,70 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "05-deleteEmployeeById-negative case",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "po8ih8rM3mHBRr2oFyrZ"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"82-O51EsY/v8R2o2eF49tpsxMy7reQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:42:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Document not found in collection employees with id po8ih8rM3mHBRr2oFyrZ\",\n    \"code\": \"DOCUMENT_NOT_FOUND\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -309,7 +891,72 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "01-create-happy case",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"red river branch\",\r\n        \"address\": \"James Ave 123\",\r\n        \"phone\":\"123\"\r\n        \r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"96-UWQ8ggDEmJyPxBThII5YT7fUUxk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:42:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"Ff5UttZyqEh7ljo6V1Kr\",\n        \"name\": \"red river branch\",\n        \"address\": \"James Ave 123\",\n        \"phone\": \"123\"\n    },\n    \"message\": \"Branch Created\"\n}"
+						}
+					]
 				},
 				{
 					"name": "01-create-negative case",
@@ -339,7 +986,72 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "01-create-negative case",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"He\",\r\n        \"address\": \"\"\r\n        \r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "152"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"98-r6Gbje18tbdnQ0I81/QJSjuG9v8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:43:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation error: Name length should greater than 3, Address cannot be empty, Phone is required\",\n    \"code\": \"VALIDATION_ERROR\"\n}"
+						}
+					]
 				},
 				{
 					"name": "02-put-happy case",
@@ -371,12 +1083,84 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "JGhKrp7rT1iim2eSFgKo"
+									"value": "25B8E6gdg9BxGjZg0RZC"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "02-put-happy case",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"address\": \"511 Rue Jean-Talon O, Montréal, QC, H3N 1R5\",\r\n        \"phone\": \"514-277-5511\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "25B8E6gdg9BxGjZg0RZC"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a6-f5N7XBxFB1TWj0JCK5aFnaw+yTU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:43:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"25B8E6gdg9BxGjZg0RZC\",\n        \"address\": \"511 Rue Jean-Talon O, Montréal, QC, H3N 1R5\",\n        \"phone\": \"514-277-5511\"\n    },\n    \"message\": \"Branches Updated\"\n}"
+						}
+					]
 				},
 				{
 					"name": "02-put-negative case",
@@ -413,7 +1197,79 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "02-put-negative case",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"address\": \"511 Rue Jean-Talon O, Montréal, QC, H3N 1R5\",\r\n        \"phone\": \"514-277-5511\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "138"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8a-50dnbFQuRWR3eD8DLj62gGzA6Po\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:43:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Failed to update: Document not found with given id 1000 in collection branches \",\n    \"code\": \"DOCUMENT_NOT_FOUND\"\n}"
+						}
+					]
 				},
 				{
 					"name": "03-get-all-branches-happy case",
@@ -434,7 +1290,63 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "03-get-all-branches-happy case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1934"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78e-/XuxqPr7NcwOoAdE0NEfkZkLQE8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:43:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": \"1loExE4wRNo28Ye3Yc3S\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"25B8E6gdg9BxGjZg0RZC\",\n            \"name\": \"Red River\",\n            \"address\": \"511 Rue Jean-Talon O, Montréal, QC, H3N 1R5\",\n            \"phone\": \"514-277-5511\"\n        },\n        {\n            \"id\": \"2RHynMGl8okglfVovexF\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"4Jqrs0CMgD8zWBG5pMgf\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"6h1CLknVLclkBa0ZEUBg\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"6vy5DmGjCTpGAWyumFWk\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"BXgPMbDr4jyQplJgZzsl\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"Bi3uVCwIgFP5JDUFOoek\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"Ff5UttZyqEh7ljo6V1Kr\",\n            \"name\": \"red river branch\",\n            \"address\": \"James Ave 123\",\n            \"phone\": \"123\"\n        },\n        {\n            \"id\": \"YTDdpWURQkQG6oddV8j1\",\n            \"name\": \"red river branch\",\n            \"address\": \"James Ave 123\",\n            \"phone\": \"123\"\n        },\n        {\n            \"id\": \"ePmw5p1nm1UJM68OIeAp\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"gE7vysRcltN8bUaPQHD2\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"gzmGyZhkAXYQd7B3L2C4\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"lpLFBmqBlbBPX3muf8Nf\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"otwYrLNBnx89NT789Tno\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"sqDZLNEYV46h02Witohr\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"vj5L6eJVHPqJHa4mfvhx\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"wRGMeq1xAh6Rg8TCGy17\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": \"y0o2omgMIIO6p8TGSnlg\",\n            \"name\": \"Red River\",\n            \"address\": \"St. James 1111\",\n            \"phone\": \"123-456-7890\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "04-get-branchById-happy case",
@@ -457,12 +1369,75 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "JGhKrp7rT1iim2eSFgKo"
+									"value": "2RHynMGl8okglfVovexF"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "04-get-branchById-happy case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2RHynMGl8okglfVovexF"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "151"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"97-MH8mypxI0m7pm8u3r1XgGu4mNyE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:44:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"id\": \"2RHynMGl8okglfVovexF\",\n        \"name\": \"Red River\",\n        \"address\": \"St. James 1111\",\n        \"phone\": \"123-456-7890\"\n    },\n    \"message\": \"Branch Found\"\n}"
+						}
+					]
 				},
 				{
 					"name": "04-get-branchById-negative case",
@@ -490,7 +1465,70 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "04-get-branchById-negative case",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/employees/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"employees",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "113"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"71-OZMMLQfe3LziNCXxzMAF2Df5c0I\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:44:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Document not found in collection employees with id 123\",\n    \"code\": \"DOCUMENT_NOT_FOUND\"\n}"
+						}
+					]
 				},
 				{
 					"name": "05-deleteBranchesById-happy case",
@@ -513,12 +1551,75 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "JGhKrp7rT1iim2eSFgKo"
+									"value": "YTDdpWURQkQG6oddV8j1"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "05-deleteBranchesById-happy case",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "YTDdpWURQkQG6oddV8j1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2c-BPpgb+mJ1bXINYB+rJJkaBP7lb8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:45:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": \"Branch Deleted\"\n}"
+						}
+					]
 				},
 				{
 					"name": "05-deleteBranchesById-negative case",
@@ -546,7 +1647,70 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "05-deleteBranchesById-negative case",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/branches/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"branches",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "po8ih8rM3mHBRr2oFyrZ"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "129"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"81-L7CLgflmOFvKRxINsdGXRN+UE6w\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2025 02:45:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Document not found in collection branches with id po8ih8rM3mHBRr2oFyrZ\",\n    \"code\": \"DOCUMENT_NOT_FOUND\"\n}"
+						}
+					]
 				}
 			]
 		},
