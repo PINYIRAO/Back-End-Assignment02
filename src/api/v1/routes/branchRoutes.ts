@@ -1,5 +1,8 @@
 import { Router } from "express";
 import * as branchController from "../controllers/branchController";
+import { validateRequest } from "../middleware/validate";
+import { branchSchema } from "../validations/branchValidation";
+import { Request, Response, NextFunction } from "express";
 
 // define a router for deal with
 const router: Router = Router();
@@ -11,12 +14,14 @@ const router: Router = Router();
 /**
  * @openapi
  * /api/v1/branches:
- *  get:
- *   summary: Get all branches
- *   tags: [Branch]
- *   responses:
- *    200:
- *     description: All branches
+ *   get:
+ *     summary: Get all branches
+ *     tags: [Branch]
+ *     responses:
+ *         200:
+ *           description: All branches
+ *         500:
+ *           description: Server error
  */
 router.get("/", branchController.getAllBranches);
 
@@ -40,6 +45,10 @@ router.get("/", branchController.getAllBranches);
  *     responses:
  *       200:
  *         description: The wanted branch
+ *       404:
+ *         description: No branch found with the specified id
+ *       500:
+ *         description: Server error
  */
 router.get("/:id", branchController.getBranchById);
 
@@ -66,10 +75,17 @@ router.get("/:id", branchController.getBranchById);
  *             phone:
  *               type: string
  *   responses:
- *    201:
- *     description: the new branch
+ *     201:
+ *       description: the new branch
+ *     500:
+ *       description: Server error
  */
-router.post("/", branchController.createBranch);
+router.post(
+  "/",
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(branchSchema("POST"))(req, res, next),
+  branchController.createBranch
+);
 
 /**
  * @route PUT /:id
@@ -100,8 +116,17 @@ router.post("/", branchController.createBranch);
  *     responses:
  *       200:
  *         description: The updated branch
+ *       404:
+ *         description: No branch found with the specified id
+ *       500:
+ *         description: Server error
  */
-router.put("/:id", branchController.updateBranch);
+router.put(
+  "/:id",
+  (req: Request, res: Response, next: NextFunction) =>
+    validateRequest(branchSchema("PUT"))(req, res, next),
+  branchController.updateBranch
+);
 
 /**
  * @route DELETE /:id
@@ -121,8 +146,12 @@ router.put("/:id", branchController.updateBranch);
  *         required: true
  *         description: ID of the branch to be deleted
  *     responses:
- *       200:
- *         description: The deleted branch
+ *      200:
+ *         description: Delete successfully
+ *      404:
+ *        description: No branch found with the specified id
+ *      500:
+ *        description: Server error
  */
 router.delete("/:id", branchController.deleteBranch);
 

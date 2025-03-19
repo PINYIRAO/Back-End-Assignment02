@@ -9,6 +9,8 @@
 import { Request, Response, NextFunction } from "express";
 import * as employeeService from "../services/employeeService";
 import type { Employee } from "../models/employeeModel";
+import { successResponse } from "../models/responseModel";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 interface EmployeeQueryParams {
   department?: string;
@@ -29,10 +31,10 @@ export const getAllEmployees = async (
     const { department, branchId }: EmployeeQueryParams = req.query;
     const employees: Employee[] = await employeeService.getAllEmployees(
       department !== undefined ? department : undefined,
-      branchId !== undefined ? parseInt(branchId) : undefined
+      branchId !== undefined ? branchId : undefined
     );
 
-    res.status(200).json(employees);
+    res.status(HTTP_STATUS.OK).json(successResponse(employees));
   } catch (error) {
     next(error);
   }
@@ -51,10 +53,12 @@ export const getEmployeeById = async (
   try {
     // call the employeeService by passing the id from thge url path and the body of the request
     const employee: Employee = await employeeService.getEmployeeById(
-      parseInt(req.params.id)
+      req.params.id
     );
 
-    res.status(200).json({ message: "Employee Found", data: employee });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(successResponse(employee, "Employee Found"));
   } catch (error) {
     next(error);
   }
@@ -76,7 +80,9 @@ export const createEmployee = async (
       req.body
     );
 
-    res.status(201).json({ message: "Employee Created", data: newEmployee });
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json(successResponse(newEmployee, "Employee Created"));
   } catch (error) {
     next(error);
   }
@@ -95,13 +101,13 @@ export const updateEmployee = async (
   try {
     // call the employeeService by passing the id from thge url path and the body of the request
     const updatedEmployee: Employee = await employeeService.updateEmployee(
-      parseInt(req.params.id),
+      req.params.id,
       req.body
     );
 
     res
-      .status(200)
-      .json({ message: "Employee Updated", data: updatedEmployee });
+      .status(HTTP_STATUS.OK)
+      .json(successResponse(updatedEmployee, "Employee Updated"));
   } catch (error) {
     next(error);
   }
@@ -118,13 +124,9 @@ export const deleteEmployee = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const removedEmployee: Employee = await employeeService.deleteEmployee(
-      parseInt(req.params.id)
-    );
+    await employeeService.deleteEmployee(req.params.id);
 
-    res
-      .status(200)
-      .json({ message: "Employee Deleted", data: removedEmployee });
+    res.status(HTTP_STATUS.OK).json(successResponse("Employee Deleted"));
   } catch (error) {
     next(error);
   }

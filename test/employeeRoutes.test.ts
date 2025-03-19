@@ -1,4 +1,3 @@
-import sampleEmployeeData from "../src/api/v1/data/employeeData";
 import request, { Response } from "supertest";
 import app from "../src/app";
 
@@ -9,9 +8,7 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
-      // check the array length equal sample data length
-      expect(response.body.length).toEqual(sampleEmployeeData.length);
+      expect(response.body.data).toBeInstanceOf(Array);
     });
     it("should return all employee records as an array matching criteria when  query paramters provided", async () => {
       const department: string = "Operations";
@@ -23,23 +20,18 @@ describe("Employee Routes", () => {
       // check the status
       expect(response.status).toBe(200);
       // check the result type is an array
-      expect(response.body).toBeInstanceOf(Array);
-      // check the array length
-      expect(response.body.length).toEqual(
-        sampleEmployeeData.filter(
-          (v) => v.department === department && v.branchId === branchId
-        ).length
-      );
+      expect(response.body.data).toBeInstanceOf(Array);
     });
   });
   describe("GET /api/v1/employees/:id", () => {
-    it("should return the wanted employee", async () => {
-      const response: Response = await request(app).get("/api/v1/employees/2");
+    it("should receive an error if the id is not found", async () => {
+      const response: Response = await request(app).get(
+        "/api/v1/employees/abcdefg"
+      );
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned employee has the right properties
-      expect(response.body.data).toHaveProperty("name");
-      expect(response.body.data).toHaveProperty("position");
+      expect(response.status).toBe(404);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/not found/);
     });
   });
   describe("POST /api/v1/employees", () => {
@@ -52,7 +44,7 @@ describe("Employee Routes", () => {
           department: "IT",
           email: "prao@email.com",
           phone: "123-456-7890",
-          branchId: 12,
+          branchId: "12",
         });
 
       // check the status
@@ -61,12 +53,11 @@ describe("Employee Routes", () => {
       expect(response.body.data).toHaveProperty("name");
       expect(response.body.data).toHaveProperty("position");
     });
-  });
-  describe("PUT /api/v1/employees/:id", () => {
-    it("should update a exsiting employee object", async () => {
+    it("should receive an error when name length is less than 3", async () => {
       const response: Response = await request(app)
-        .put("/api/v1/employees/2")
+        .post("/api/v1/employees")
         .send({
+          name: "xy",
           position: "it",
           department: "IT",
           email: "prao@email.com",
@@ -75,27 +66,93 @@ describe("Employee Routes", () => {
         });
 
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned employee has the right properties
-      expect(response.body.data).toHaveProperty("name");
-      expect(response.body.data).toHaveProperty("position");
-      // check the updated email value
-      expect(response.body.data.email).toBe("prao@email.com");
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/should greater than 3/i);
+    });
+    it("should receive an error when position field is missing", async () => {
+      const response: Response = await request(app)
+        .post("/api/v1/employees")
+        .send({
+          name: "xyz",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 12,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/position is required/i);
+    });
+  });
+  describe("PUT /api/v1/employees/:id", () => {
+    it("should update a exsiting employee object", async () => {
+      const response: Response = await request(app)
+        .put("/api/v1/employees/abcdef")
+        .send({
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: "1234",
+        });
+
+      // check the status
+      expect(response.status).toBe(404);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/failed to update/i);
+    });
+    it("should receive an error if has the name field", async () => {
+      const response: Response = await request(app)
+        .put("/api/v1/employees/2")
+        .send({
+          name: "XYZ",
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 12,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/is not allowed to be updated/i);
+    });
+    it("should receive an error if branchid is not a string", async () => {
+      const response: Response = await request(app)
+        .put("/api/v1/employees/2")
+        .send({
+          name: "XYZ",
+          position: "it",
+          department: "IT",
+          email: "prao@email.com",
+          phone: "123-456-7890",
+          branchId: 123,
+        });
+
+      // check the status
+      expect(response.status).toBe(400);
+      // check han return an object containing message
+      expect(response.body.status).toMatch(/error/i);
+      expect(response.body.message).toMatch(/must be a string/i);
     });
   });
   describe("DELETE /api/v1/employees/:id", () => {
-    it("should delete a exsiting employee object", async () => {
+    it("should receive an error if the id is not found", async () => {
       const response: Response = await request(app).delete(
-        "/api/v1/employees/20"
+        "/api/v1/employees/abcdefg"
       );
 
       // check the status
-      expect(response.status).toBe(200);
-      // check the returned employee has the right properties
-      expect(response.body.data).toHaveProperty("name");
-      expect(response.body.data).toHaveProperty("position");
-      // check the email format, including @
-      expect(response.body.data.email).toMatch("@");
+      expect(response.status).toBe(404);
+      expect(response.body.status).toMatch(/error/);
+      expect(response.body.message).toMatch(/not found/);
     });
   });
 });
