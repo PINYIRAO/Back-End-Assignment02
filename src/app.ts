@@ -1,5 +1,9 @@
 // import the express application and type definition
 import express, { Express } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 // Importing morgan
 import { accessLogger } from "./api/v1/middleware/logger";
 // import setupSwagger endpoint

@@ -2,5 +2,6 @@ node_modules/
 .vscode/
 *.log
 dist/
+.env
 
 backend-employee-management-firebase-adminsdk-fbsvc-eda7eb54e3.json
