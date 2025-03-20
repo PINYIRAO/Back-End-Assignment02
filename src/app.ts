@@ -15,6 +15,7 @@ import healthRoutes from "./api/v1/routes/healthRoutes";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
 import helmet from "helmet";
+import cors from "cors";
 
 // initialize the express application
 const app: Express = express();
@@ -31,6 +32,15 @@ app.use(
     xFrameOptions: { action: "sameorigin" },
     // prevent the xss attack
     xXssProtection: true,
+  })
+);
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://allowed.example.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    // allow the cross site request send credentials
+    credentials: true,
   })
 );
 
