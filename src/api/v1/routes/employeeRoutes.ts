@@ -20,6 +20,12 @@ const router: Router = Router();
  *     responses:
  *         200:
  *           description: All employess  matching the criteria
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 employees:
+ *                   $ref: '#/components/schemas/Employee'
  *         500:
  *           description: Server error
  */
@@ -45,6 +51,12 @@ router.get("/", employeeController.getAllEmployees);
  *     responses:
  *       200:
  *         description: The wanted employee
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               employees:
+ *                 $ref: '#/components/schemas/Employee'
  *       404:
  *         description: No branch found with the specified id
  *       500:
@@ -63,23 +75,11 @@ router.get("/:id", employeeController.getEmployeeById);
  *   summary: Create a new employee
  *   tags: [Employee]
  *   requestBody:
+ *     required: true
  *     content:
  *       application/json:
  *         schema:
- *           type: object
- *           properties:
- *             name:
- *               type: string
- *             position:
- *               type: string
- *             department:
- *               type: string
- *             email:
- *               type: string
- *             phone:
- *               type: string
- *             branchId:
- *               type: number
+ *           $ref: '#/components/schemas/Employee'
  *   responses:
  *    201:
  *     description: the new employee
@@ -106,25 +106,15 @@ router.post(
  *       - in: path
  *         name: id
  *         schema:
- *           type: number
+ *           type: string
  *         required: true
  *         description: ID of the employee to update
  *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               position:
- *                 type: string
- *               department:
- *                 type: string
- *               email:
- *                 type: string
- *               phone:
- *                   type: string
- *               branchId:
- *                 type: number
+ *             $ref: '#/components/schemas/Employee'
  *     responses:
  *       200:
  *         description: The updated employee
@@ -154,7 +144,7 @@ router.put(
  *       - in: path
  *         name: id
  *         schema:
- *           type: number
+ *           type: string
  *         required: true
  *         description: ID of the employee to be deleted
  *     responses:
