@@ -14,9 +14,25 @@ import errorHandler from "./api/v1/middleware/errorHandler";
 import healthRoutes from "./api/v1/routes/healthRoutes";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
+import helmet from "helmet";
 
 // initialize the express application
 const app: Express = express();
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      // strict the source of resource
+      directives: {
+        defaultSrc: ["'self'"],
+      },
+    },
+    // prevent from clickjacking
+    xFrameOptions: { action: "sameorigin" },
+    // prevent the xss attack
+    xXssProtection: true,
+  })
+);
 
 // setup swagger for api documentation
 setupSwagger(app);
