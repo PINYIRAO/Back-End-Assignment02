@@ -24,7 +24,7 @@ const router: Router = Router();
  *             application/json:
  *               schema:
  *                 type: array
- *                 branches:
+ *                 items:
  *                   $ref: '#/components/schemas/Branch'
  *         500:
  *           description: Server error
@@ -53,9 +53,8 @@ router.get("/", branchController.getAllBranches);
  *         description: The wanted branch
  *         content:
  *           application/json:
- *             schema:
  *               type: object
- *               branches:
+ *               schema:
  *                 $ref: '#/components/schemas/Branch'
  *       404:
  *         description: No branch found with the specified id

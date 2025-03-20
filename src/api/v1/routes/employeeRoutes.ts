@@ -24,7 +24,7 @@ const router: Router = Router();
  *             application/json:
  *               schema:
  *                 type: array
- *                 employees:
+ *                 items:
  *                   $ref: '#/components/schemas/Employee'
  *         500:
  *           description: Server error
