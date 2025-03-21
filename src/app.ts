@@ -1,6 +1,7 @@
 // import the express application and type definition
 import express, { Express } from "express";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 
@@ -46,6 +47,8 @@ app.use(
 
 // setup swagger for api documentation
 setupSwagger(app);
+
+app.use("/static", express.static(path.join(__dirname, "public/images")));
 
 app.use(express.json());
 

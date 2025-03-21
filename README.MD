@@ -120,11 +120,11 @@ The `fastapi dev` server should reload automatically.
 
 ### Interactive API docs upgrade
 
-Now go to <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
+Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target="_blank">http://localhost:3000/api-docs/</a>.
 
 * The interactive API documentation will be automatically updated, including the new body:
 
-![Swagger UI](https://fastapi.tiangolo.com/img/index/index-03-swagger-02.png)
+![Swagger UI](http//localhost:3000/static/Swagger-01.png)
 
 * Click on the button "Try it out", it allows you to fill the parameters and directly interact with the API:
 
