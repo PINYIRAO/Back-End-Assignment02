@@ -79,7 +79,7 @@ Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target
 
 You will see the automatic interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
 
-![Swagger UI](http://localhost:3000/static/swagger-01.png)
+![Swagger UI](./public/swagger-01.png)
 
 ### Alternative API docs
 
