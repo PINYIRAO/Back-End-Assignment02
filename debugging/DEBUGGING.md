@@ -89,7 +89,7 @@ Answer: No for this moment.
   Answer:
   variable: err
   value:
-  The value constains message "INVALID COMSUMER", and the error comes from the firebase which let me ensure that maybe I configured the wrong information for firebase.
+  The value constains message "INVALID COMSUMER", and the error comes from the firebase which let me ensure that maybe I configured the wrong information for firebase. I should make a judgment only after ensuring that the data interaction is completely error-free.
 
 - **Call Stack:** [Summarize the function sequence leading to the breakpoint]
   Answer: I don't need to observe it in the scenario.

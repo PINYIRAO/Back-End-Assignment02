@@ -13,7 +13,7 @@ const router: Router = Router();
  */
 /**
  * @openapi
- * /api/v1/employees:
+ * /employees:
  *   get:
  *     summary: Get all employees
  *     tags: [Employee]
@@ -37,7 +37,7 @@ router.get("/", employeeController.getAllEmployees);
  */
 /**
  * @openapi
- * /api/v1/employees/{id}:
+ * /employees/{id}:
  *   get:
  *     summary: Get an existing employee
  *     tags: [Employee]
@@ -70,7 +70,7 @@ router.get("/:id", employeeController.getEmployeeById);
  */
 /**
  * @openapi
- * /api/v1/employees:
+ * /employees:
  *  post:
  *   summary: Create a new employee
  *   tags: [Employee]
@@ -98,7 +98,7 @@ router.post(
  * @description Update an existing employee.
  *
  * @openapi
- * /api/v1/employees/{id}:
+ * /employees/{id}:
  *   put:
  *     summary: Update an existing employee
  *     tags: [Employee]
@@ -136,7 +136,7 @@ router.put(
  */
 /**
  * @openapi
- * /api/v1/employees/{id}:
+ * /employees/{id}:
  *   delete:
  *     summary: Delete an existing employee
  *     tags: [Employee]

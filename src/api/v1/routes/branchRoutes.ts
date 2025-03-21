@@ -13,7 +13,7 @@ const router: Router = Router();
  */
 /**
  * @openapi
- * /api/v1/branches:
+ * /branches:
  *   get:
  *     summary: Get all branches
  *     tags: [Branch]
@@ -37,7 +37,7 @@ router.get("/", branchController.getAllBranches);
  */
 /**
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   get:
  *     summary: Get an existing branch
  *     tags: [Branch]
@@ -69,7 +69,7 @@ router.get("/:id", branchController.getBranchById);
  */
 /**
  * @openapi
- * /api/v1/branches:
+ * /branches:
  *  post:
  *   summary: Create a new branch
  *   tags: [Branch]
@@ -97,7 +97,7 @@ router.post(
  * @description Update an existing branch.
  *
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   put:
  *     summary: Update an existing branch
  *     tags: [Branch]
@@ -135,7 +135,7 @@ router.put(
  */
 /**
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   delete:
  *     summary: Delete an existing branch
  *     tags: [Branch]
