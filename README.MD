@@ -59,6 +59,8 @@ $ npm start
 (Use `node --trace-deprecation ...` to show where the warning was created)
 Server is running on port 3000
 
+```
+
 </div>
 
 ### Check it
@@ -67,7 +69,7 @@ Open your browser at <a href="http://localhost:3000/health" class="external-link
 
 You will see the string response as:
 
-```String
+```console
 Server is healthy
 ```
 
@@ -86,9 +88,6 @@ You will see the automatic interactive API documentation (provided by <a href="h
 And now, go to <a href="https://pinyirao.github.io/Back-End-assignment05-OpenAPI-Docs/" class="external-link" target="_blank">https://pinyirao.github.io/Back-End-assignment05-OpenAPI-Docs/</a>.
 
 You will see the alternative documentation (provided by GitHub Pages):
-
-![ReDoc](http://localhost:3000/static/alternative-api-docs-02)
-
 
 ### Interactive API docs 
 
