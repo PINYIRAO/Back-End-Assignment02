@@ -87,6 +87,39 @@ Server is healthy
 
 You already started the API server successfully
 
+### Usage example
+ ```typescript
+// define Branch type
+export type Branch {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+}
+
+// send get request for branches data
+async function fetchBranches(): Promise<Branch[]> {
+  try {
+    const response = await fetch("http://localhost:3000/api/v1/branches");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data: Branch[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching branches:", error);
+    return [];
+  }
+}
+
+// invoke function to print them out
+fetchBranches().then((branches) => {
+  console.log("Branches:", branches);
+});
+ ```
+
 ### Interactive API docs
 
 Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target="_blank">http://localhost:3000/api-docs/</a>.
