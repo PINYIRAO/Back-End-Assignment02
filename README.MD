@@ -96,15 +96,15 @@ Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target
 
 * The interactive API documentation will be automatically updated, including the new body:
 
-![Swagger UI](http://localhost:3000/static/swagger-02.png)
+![Swagger UI interaction](./public/swagger-02.png)
 
 * Click on the button "Try it out", it allows you to fill the parameters and directly interact with the API:
 
-![Swagger UI interaction](http://localhost:3000/static/swagger-03.png)
+![Swagger UI interaction](./public/swagger-03.png)
 
 * Then click on the "Execute" button, the user interface will communicate with your API, send the parameters, get the results and show them on the screen:
 
-![Swagger UI interaction](http://localhost:3000/static/swagger-04.png)
+![Swagger UI interaction](./public/swagger-04.png)
 
 
 Coming back to the previous code example, **Employee and Branch Management API** will:
