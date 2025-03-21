@@ -17,22 +17,30 @@ The key features are:
 
 * **CURD**: Very reliable to mange the employee and branch information.
 * **Security**: Secured the API with cors and helmet library.
-* **Easy**: Easy to use. Less time debugging.
-* **Easy**: Designed to be easy to use and learn. Less time reading docs.
+* **Easy**: Easy to use and learn. Less time debugging.
 * **Standards-based**: Based on (and fully compatible with) the open standards for APIs: <a href="https://github.com/OAI/OpenAPI-Specification" class="external-link" target="_blank">OpenAPI</a> (previously known as Swagger) and <a href="https://json-schema.org/" class="external-link" target="_blank">JSON Schema</a>.
 
 ## Requirements
+- [Node.js](https://nodejs.org/) (version 14 or later)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
 ## Installation
+
+### Clone Repository
 
 Create a project folder and then clone the project:
 
 <div class="termy">
 
-```console
+```bash
 $ git clone https://github.com/PINYIRAO/Back-End-Assignment02
-
 ```
+
+###  Install dependencies:
+```bash
+npm install
+```
+
 ### Configure it
 Configure a .env file in the project root directory for dotenv containing the content as below:
 
@@ -53,7 +61,7 @@ Run the server with:
 
 <div class="termy">
 
-```console
+```bash
 $ npm start
 
 > back-end-assignment02@1.0.0 start
@@ -93,7 +101,7 @@ And now, go to <a href="https://pinyirao.github.io/Back-End-assignment05-OpenAPI
 
 You will see the alternative documentation (provided by GitHub Pages):
 
-### Interactive API docs 
+## Interactive API docs 
 
 Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target="_blank">http://localhost:3000/api-docs/</a>.
 
