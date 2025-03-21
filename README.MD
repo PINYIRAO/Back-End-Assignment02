@@ -70,65 +70,28 @@ Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target
 
 You will see the automatic interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
 
-![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
+![Swagger UI](http://localhost:3000/static/swagger-01.png)
 
 ### Alternative API docs
 
-And now, go to <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a>.
+And now, go to <a href="https://pinyirao.github.io/Back-End-assignment05-OpenAPI-Docs/" class="external-link" target="_blank">https://pinyirao.github.io/Back-End-assignment05-OpenAPI-Docs/</a>.
 
-You will see the alternative automatic documentation (provided by <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
+You will see the alternative documentation (provided by GitHub Pages):
 
-![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
-
-## Example upgrade
-
-Now modify the file `main.py` to receive a body from a `PUT` request.
-
-Declare the body using standard Python types, thanks to Pydantic.
-
-```Python hl_lines="4  9-12  25-27"
-from typing import Union
-
-from fastapi import FastAPI
-from pydantic import BaseModel
-
-app = FastAPI()
+![ReDoc](http://localhost:3000/static/alternative-api-docs-02)
 
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Union[bool, None] = None
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
-```
-
-The `fastapi dev` server should reload automatically.
-
-### Interactive API docs upgrade
+### Interactive API docs 
 
 Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target="_blank">http://localhost:3000/api-docs/</a>.
 
 * The interactive API documentation will be automatically updated, including the new body:
 
-![Swagger UI](http://localhost:3000/static/swagger-01.png)
+![Swagger UI](http://localhost:3000/static/swagger-02.png)
 
 * Click on the button "Try it out", it allows you to fill the parameters and directly interact with the API:
 
-![Swagger UI interaction](https://fastapi.tiangolo.com/img/index/index-04-swagger-03.png)
+![Swagger UI interaction](http://localhost:3000/static/swagger-03.png)
 
 * Then click on the "Execute" button, the user interface will communicate with your API, send the parameters, get the results and show them on the screen:
 

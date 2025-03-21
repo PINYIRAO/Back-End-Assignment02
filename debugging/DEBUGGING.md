@@ -73,38 +73,34 @@ Answer: No for this moment.
   Answer: No for this moment.
 
 - How does this enhance your understanding of the overall project?
-  Answer: Some static resources can be easily served by the express framework..
+  Answer: Some static resources can be easily served by the express framework.
 
-## Scenario 3: Watch how the error-handling middleware function handles errors when a document does not exist
+## Scenario 3: I try to get all branches, but it doesn't work
 
 - **Breakpoint Location:** [File and line number]
-  Answer: line 56 in errorHandler.ts
+  Answer: line 71 in firestoreRepository.ts
 
 - **Objective:** [What you are investigating or trying to understand]
-  Answer: watch the error object handled and the process of error handling
+  Answer: I am not sure the problem has to do with the secure settings or something else, I try to position it.
 
 ### Debugger Observations
 
 - **Variable States:** [List key variables and their values]
   Answer:
-  variable: err,
+  variable: err
   value:
-  code:"DOCUMENT_NOT_FOUND"
-  name:"RepositoryError"
-  statuscode:404
-  message:"Document not found in collection employees with id po8ih8rM3mHBRr2oFyrZ"
+  The value constains message "INVALID COMSUMER", and the error comes from the firebase which let me ensure that maybe I configured the wrong information for firebase.
 
 - **Call Stack:** [Summarize the function sequence leading to the breakpoint]
   Answer: I don't need to observe it in the scenario.
 
 - **Behavior:**
-  Answer:
-  When the program throws an error, the error handler takes over and provides the user with a meaningful response, including error details.
+  Answer: I couldn't get any branches records using API.
 
 ### Analysis
 
 - What did you learn from this scenario?
-  Answer: I learned when the error handler is triggered, and how it will end the request processing.
+  Answer: After completing the Firebase configuration using dotenv, I started the server, and it worked. I thought I had done a good job, but there was a misconfiguration in the configuration file.
 
 - Did you observe any unexpected behavior? If so, what might be the cause?
   Answer: No for this moment.
@@ -113,4 +109,4 @@ Answer: No for this moment.
   Answer: No for this moment.
 
 - How does this enhance your understanding of the overall project?
-  Answer: I have learned that the error handler can provide the user with a consistent and meaningful response, depending on whether the program itself provides meaningful error messages and a consistent error type definition.
+  Answer: The error messages thrown by the application should be clear and comprehensive. This would make it easier for programmers to debug and for users to understand.
