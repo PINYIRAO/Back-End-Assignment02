@@ -36,12 +36,16 @@ $ git clone https://github.com/PINYIRAO/Back-End-Assignment02
 ### Configure it
 Configure a .env file in the project root directory for dotenv containing the content as below:
 
+```console
 NODE_ENV=filler
 PORT=filler
 FIREBASE_PROJECT_ID=filler
 FIREBASE_PRIVATE_KEY=filler
 FIREBASE_CLIENT_EMAIL=filler
-SWAGGER_SERVER_URL=http://localhost:3000/api/v1
+SWAGGER_SERVER_URL=filler
+```
+
+NODE_ENV indicated the project environment type, the PORT means the API endpoints' port. We also need to configure the FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, and FIREBASE_CLIENT_EMAIL for the project to ensure we could interact with a firestore database. The SWAGGER_SERVER_URL is the url configuration for swagger server.
 
 ### Run it
 
@@ -116,7 +120,7 @@ Coming back to the previous code example, **Employee and Branch Management API**
 ---
 ## Dependencies
 
-This API application depends on Express, firebase, Joi, helmet, and cors and other libraries..
+This API application depends on Express, firebase, Joi, helmet, and cors and other libraries.
 
 ## License
 
