@@ -124,7 +124,7 @@ Now go to <a href="http://localhost:3000/api-docs/" class="external-link" target
 
 * The interactive API documentation will be automatically updated, including the new body:
 
-![Swagger UI](http//localhost:3000/static/Swagger-01.png)
+![Swagger UI](http://localhost:3000/static/swagger-01.png)
 
 * Click on the button "Try it out", it allows you to fill the parameters and directly interact with the API:
 

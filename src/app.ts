@@ -48,13 +48,12 @@ app.use(
 // setup swagger for api documentation
 setupSwagger(app);
 
-app.use("/static", express.static(path.join(__dirname, "public/images")));
-
 app.use(express.json());
 
 // Use morgan for HTTP request logging
 app.use(accessLogger);
 
+app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/health", healthRoutes);
 app.use("/api/v1/employees", employeeRoutes);
 app.use("/api/v1/branches", branchRoutes);

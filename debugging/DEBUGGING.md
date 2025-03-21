@@ -40,33 +40,32 @@ check if I need to replace the "\\n" with "\n" while parsing the serviceaccount 
 - How does this enhance your understanding of the overall project?
   Answer: The debugging scenario helped me gain a deeper understanding of dotenv parsing the string containing "\n".
 
-## Scenario 2: when the document couldnot be found while trying to delete it
+## Scenario 2: I want to render some static resources, but it doesn't work
 
 - **Breakpoint Location:** [File and line number]
-  Answer: line 165 in firestoreRepository.ts
+  Answer: line 56 in app.ts
 
 - **Objective:** [What you are investigating or trying to understand]
-  Answer: the process mechanism when there is no specific document in firestore
+  Answer: the mechanism about how the express render static resources.
 
 ### Debugger Observations
 
 - **Variable States:** [List key variables and their values]
   Answer:
-  variable name: docSnap
-  variable value:
-  there is an exists property in docSnap, when the docSnap has no content, it would be false
+  variable name: "\_\_dirname"
+  variable value:D:\\rrc_polytech\\courses\\Term3_3018_Back-End_development\\assignment\\Back-End-Assignment05\\src
 
 - **Call Stack:** [Summarize the function sequence leading to the breakpoint]
   Answer: I don't need to observe it in the scenario.
 
 - **Behavior:**
   Answer:
-  When we query a document by its specific ID and the document is not found, we can use the DocumentSnapshot.exists property to determine whether the document exists or not.
+  When I try to get my static resource, the express doesn't give me the right feedback.
 
 ### Analysis
 
 - What did you learn from this scenario?
-  Answer: how to judge if there is a document has the specific id
+  Answer: learned about the "\_\_dirname" value and how to use path.join to concatenate the path.
 
 Answer: No for this moment.
 
@@ -74,7 +73,7 @@ Answer: No for this moment.
   Answer: No for this moment.
 
 - How does this enhance your understanding of the overall project?
-  Answer: when no documents match the query conditions, Firestore does not raise an error. We need to handle this case manually and raise an error by ourself if we want to provide a user-friendly experience.
+  Answer: Some static resources can be easily served by the express framework..
 
 ## Scenario 3: Watch how the error-handling middleware function handles errors when a document does not exist
 
