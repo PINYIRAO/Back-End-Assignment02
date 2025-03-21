@@ -2,6 +2,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
+import { ServiceError } from "./api/v1/errors/errors";
 
 dotenv.config();
 
@@ -38,7 +39,24 @@ app.use(
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://allowed.example.com"],
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        ["http://localhost:3000", "https://allowed.example.com"].includes(
+          origin
+        )
+      ) {
+        callback(null, true); // allow request
+      } else {
+        callback(
+          new ServiceError(
+            "Origin source is not allowed to access the API application",
+            "NOT ALLOWED BY CORS CONFIG"
+          ),
+          false
+        ); // deby request
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     // allow the cross site request send credentials
     credentials: true,
