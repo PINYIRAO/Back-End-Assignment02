@@ -51,10 +51,11 @@ app.use(
         callback(
           new ServiceError(
             "Origin source is not allowed to access the API application",
-            "NOT ALLOWED BY CORS CONFIG"
+            "NOT ALLOWED BY CORS CONFIG",
+            400 // bad request
           ),
           false
-        ); // deby request
+        ); // deny request
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
