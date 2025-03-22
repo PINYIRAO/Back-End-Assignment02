@@ -16,7 +16,7 @@ This is a framework for managing employee and branch information.
 The key features are:
 
 * **CURD**: Very reliable to mange the employee and branch information.
-* **Security**: Secured the API with cors and helmet library.
+* **Security**: Secured the API using CORS and Helmet libraries. The API restricts the display of resources, prevents script execution from unauthorized sources, and blocks rendering within iframes on external domains. Cross-origin resource sharing (CORS) is only allowed for requests from http://localhost:3000 and https://allowed.example.com, with permitted methods limited to GET, POST, PUT, and DELETE.
 * **Easy**: Easy to use and learn. Less time debugging.
 * **Standards-based**: Based on (and fully compatible with) the open standards for APIs: <a href="https://github.com/OAI/OpenAPI-Specification" class="external-link" target="_blank">OpenAPI</a> (previously known as Swagger) and <a href="https://json-schema.org/" class="external-link" target="_blank">JSON Schema</a>.
 
