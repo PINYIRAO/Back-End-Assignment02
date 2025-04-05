@@ -13,13 +13,19 @@ const router: Router = Router();
  */
 /**
  * @openapi
- * /api/v1/branches:
+ * /branches:
  *   get:
  *     summary: Get all branches
  *     tags: [Branch]
  *     responses:
  *         200:
  *           description: All branches
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Branch'
  *         500:
  *           description: Server error
  */
@@ -31,7 +37,7 @@ router.get("/", branchController.getAllBranches);
  */
 /**
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   get:
  *     summary: Get an existing branch
  *     tags: [Branch]
@@ -45,6 +51,11 @@ router.get("/", branchController.getAllBranches);
  *     responses:
  *       200:
  *         description: The wanted branch
+ *         content:
+ *           application/json:
+ *               type: object
+ *               schema:
+ *                 $ref: '#/components/schemas/Branch'
  *       404:
  *         description: No branch found with the specified id
  *       500:
@@ -58,22 +69,16 @@ router.get("/:id", branchController.getBranchById);
  */
 /**
  * @openapi
- * /api/v1/branches:
+ * /branches:
  *  post:
  *   summary: Create a new branch
  *   tags: [Branch]
  *   requestBody:
+ *     required: true
  *     content:
  *       application/json:
  *         schema:
- *           type: object
- *           properties:
- *             name:
- *               type: string
- *             address:
- *               type: string
- *             phone:
- *               type: string
+ *             $ref: '#/components/schemas/Branch'
  *   responses:
  *     201:
  *       description: the new branch
@@ -92,7 +97,7 @@ router.post(
  * @description Update an existing branch.
  *
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   put:
  *     summary: Update an existing branch
  *     tags: [Branch]
@@ -100,19 +105,15 @@ router.post(
  *       - in: path
  *         name: id
  *         schema:
- *           type: number
+ *           type: string
  *         required: true
  *         description: ID of the branch to update
  *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               address:
- *                 type: string
- *               phone:
- *                   type: string
+ *             $ref: '#/components/schemas/Branch'
  *     responses:
  *       200:
  *         description: The updated branch
@@ -134,7 +135,7 @@ router.put(
  */
 /**
  * @openapi
- * /api/v1/branches/{id}:
+ * /branches/{id}:
  *   delete:
  *     summary: Delete an existing branch
  *     tags: [Branch]
@@ -142,7 +143,7 @@ router.put(
  *       - in: path
  *         name: id
  *         schema:
- *           type: number
+ *           type: string
  *         required: true
  *         description: ID of the branch to be deleted
  *     responses:
